@@ -1,51 +1,57 @@
 import { Injectable,NotFoundException } from '@nestjs/common';
+import { readFile,writeFile } from 'fs/promises';
+import { join } from 'path';
 import { CreateCharacterDto } from './dto/create-character.dto';
 import { UpdateCharacterDto } from './dto/update-character.dto';
 import { ICharacters } from './interface/interface.characters';
-
 import { v4 as uuidv4 } from 'uuid';
-import * as fs from 'fs';
-import * as path from 'path';
+
 
 @Injectable()
 export class CharactersService {
-  private characters: ICharacters[];
+  private filePath: string;// Define una propiedad filePath para almacenar la ruta del archivo JSON.
 
   constructor() {
-    this.loadCharacters();
+    this.filePath = join(__dirname ,'..','model', 'characters.json');// Inicializa filePath con la ruta al archivo characters.json.
   }
+  //carga los datos del archivo JSON.
+  private async loadData(): Promise<ICharacters[]> {
+    const data = await readFile(this.filePath, 'utf-8');/// Lee el archivo JSON.
+    return JSON.parse(data);// Convierte el contenido del archivo JSON a un array de objetos ICharacters.
+  }
+  //guarda los datos en el archivo JSON.
+  private async saveData(data: ICharacters[]): Promise<void> {
+    await writeFile(this.filePath, JSON.stringify(data, null, 2), 'utf-8');
+  } //// Escribe el array de objetos ICharacters en el archivo JSON.
 
-  private loadCharacters() {
-    const filePath = path.resolve(__dirname,'..','..','src' , 'model', 'characters.json');
-    try {
-      const data = fs.readFileSync(filePath, 'utf8');
-      this.characters = JSON.parse(data);
-    } catch (error) {
-      this.characters = []; // Si hay un error al cargar los personajes, inicializamos la lista como vacía
-    }
-  }
-   async create(createCharacterDto: CreateCharacterDto): Promise<ICharacters> {
-   const newCharacter: ICharacters = { id: uuidv4(), ...createCharacterDto };
-    this.characters.push(newCharacter);
-    this.saveCharacters();
-    return newCharacter;
-  }
-  
 
   async getAllCharacters(): Promise<ICharacters[]>  {//método devuelve una promesa de un array de personajes
-    return this.characters;// retorna lista completa de personajes almacenadas en la propiedad characters.
+    return this.loadData();// retorna lista completa de personajes almacenadas en la propiedad characters.
   }
-
+  
+  // Método público que devuelve un personaje por su ID.
   async getOneCharacter(id: string) : Promise<ICharacters>{
     try {
-      const character = this.characters.find((character) => character.id === id);//buscame en objeto charactersSimpsons, el personaje que coincida con el id ingresado por parametro y devolveme el resultado en una constante character
+      const data = await   this.loadData(); // Carga los datos del archivo JSON.
+      const character= data.find((character) => character.id === id);// Busca el personaje que coincide con el ID.
+      // devuelve el resultado en una constante character
       if (Object.keys(character).length)
       return character;
     } catch (error) { //se lanza excepcion 
       throw new NotFoundException(`Track con id '${id}' no existe`);
     }
+  
   }
-
+// Método que crea un nuevo personaje.
+   async create(newCharacter: CreateCharacterDto): Promise<ICharacters> {
+    const data = await this.loadData();
+   const Character: ICharacters = { id: uuidv4(), ...newCharacter };
+   // Crea un nuevo objeto personaje con un ID único y los datos proporcionados.
+    data.push(Character);// Agrega el nuevo personaje al array.
+    await this.saveData(data);// Guarda los datos actualizados en el archivo JSON.
+    return Character;
+  }
+  
   update(id: number, updateCharacterDto: UpdateCharacterDto) {
     return `This action updates a #${id} character`;
   }
@@ -53,11 +59,7 @@ export class CharactersService {
   remove(id: number) {
     return `This action removes a #${id} character`;
   }
-  
-  private saveCharacters() {
-  const filePath = path.resolve(__dirname, 'model', 'characters.json');
-  fs.writeFileSync(filePath, JSON.stringify(this.characters, null, 2));
-}
+
 }
 
 
