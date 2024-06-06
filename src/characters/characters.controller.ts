@@ -2,24 +2,29 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { CharactersService } from './characters.service';
 import { CreateCharacterDto } from './dto/create-character.dto';
 import { UpdateCharacterDto } from './dto/update-character.dto';
+import { ICharacters } from './interface/interface.characters';
 
-@Controller('characters')
+
+@Controller('characters')// todas las rutas definidas en este controlador estarán precedidas por /characters
 export class CharactersController {
   constructor(private readonly charactersService: CharactersService) {}
 
   @Post()
-  create(@Body() createCharacterDto: CreateCharacterDto) {
+ create(@Body() createCharacterDto: CreateCharacterDto): Promise<ICharacters> {
+  
     return this.charactersService.create(createCharacterDto);
   }
 
-  @Get()
-  findAll() {
-    return this.charactersService.findAll();
+  @Get() //maneja las solicitudes GET a la ruta /characters
+   getAllCharacters(): Promise<ICharacters[]>  {
+    return this.charactersService.getAllCharacters();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.charactersService.findOne(+id);
+  @Get(':id')// maneja solicitudes GET a la ruta /characters/:id. 
+  async getOneCharacter(@Param('id') id: string): Promise<ICharacters> {
+    //Utiliza el decorador @Param('id') para obtener el valor del parámetro de la URL
+    return this.charactersService.getOneCharacter(id);
+    // llama al método del servicio para buscar un personaje por su ID y devolverlo.
   }
 
   @Patch(':id')

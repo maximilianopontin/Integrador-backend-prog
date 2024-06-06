@@ -1,0 +1,275 @@
+
+    [
+    {
+      "id": "d71f23a0-7c4d-4d6d-93f5-64733d1c3e4a",
+      "nombre": "Homer Simpson",
+      "edad": 39,
+      "ocupacion": "Inspector de seguridad en la planta nuclear de Springfield",
+      "caracteristicas": [
+        "Perezoso",
+        "Gordo",
+        "Amante de las rosquillas",
+        "Padre de tres hijos",
+        "Irritable",
+        "Buen corazón",
+        "Despreocupado",
+        "Fanático de la cerveza Duff"
+      ],
+      "familia": ["Marge Simpson", "Bart Simpson", "Lisa Simpson", "Maggie Simpson"]
+    },
+    {
+      "id": "b44a58c7-0b7b-4f18-8a8b-1d6d24421b3c",
+      "nombre": "Marge Simpson",
+      "edad": 36,
+      "ocupacion": "Ama de casa",
+      "caracteristicas": [
+        "Cabello azul alto",
+        "Paciente",
+        "Cuidadosa",
+        "Madre de tres hijos",
+        "Moralista",
+        "Buena cocinera",
+        "Hábil en el bricolaje",
+        "Amante del arte"
+      ],
+      "familia": ["Homer Simpson", "Bart Simpson", "Lisa Simpson", "Maggie Simpson"]
+    },
+    {
+      "id": "3c8e8b2a-1f44-4c9e-8d5b-25c70e73014b",
+      "nombre": "Bart Simpson",
+      "edad": 10,
+      "ocupacion": "Estudiante",
+      "caracteristicas": [
+        "Travieso",
+        "Skater",
+        "Rebelde",
+        "Problemas con la autoridad",
+        "Sarcasmo",
+        "Creativo",
+        "Amante de las bromas",
+        "Jugador de videojuegos"
+      ],
+      "familia": ["Homer Simpson", "Marge Simpson", "Lisa Simpson", "Maggie Simpson"]
+    },
+    {
+      "id": "f3b2d40b-e7f5-48e0-9df3-c0c7f3292bc1",
+      "nombre": "Lisa Simpson",
+      "edad": 8,
+      "ocupacion": "Estudiante",
+      "caracteristicas": [
+        "Inteligente",
+        "Vegetariana",
+        "Saxofonista",
+        "Defensora de los derechos de los animales",
+        "Feminista",
+        "Aplicada",
+        "Amante de la lectura",
+        "Idealista"
+      ],
+      "familia": ["Homer Simpson", "Marge Simpson", "Bart Simpson", "Maggie Simpson"]
+    },
+    {
+      "id": "ea159c37-8ab6-4b3c-8c4f-fc24b2b94891",
+      "nombre": "Maggie Simpson",
+      "edad": 1,
+      "ocupacion": "Bebé",
+      "caracteristicas": [
+        "Chupa chupete",
+        "Silenciosa",
+        "Observadora",
+        "Inocente",
+        "Hábil con el tirachinas",
+        "Dependiente de su chupete",
+        "Tierna",
+        "Intuitiva"
+      ],
+      "familia": ["Homer Simpson", "Marge Simpson", "Bart Simpson", "Lisa Simpson"]
+    },
+    {
+      "id": "57c924d5-e0f7-4f47-8b23-95d51a93a8a3",
+      "nombre": "Abraham Simpson",
+      "edad": 83,
+      "ocupacion": "Jubilado",
+      "caracteristicas": [
+        "Olvidadizo",
+        "Contador de historias",
+        "Veterano de guerra",
+        "Vive en un hogar de ancianos",
+        "Cascarrabias",
+        "Nostálgico",
+        "Exagerado",
+        "A veces incoherente"
+      ],
+      "familia": ["Homer Simpson", "Marge Simpson", "Bart Simpson", "Lisa Simpson", "Maggie Simpson"]
+    },
+    {
+      "id": "be48c432-9e0d-41cf-a776-973a3e4fb3a1",
+      "nombre": "Ned Flanders",
+      "edad": 60,
+      "ocupacion": "Dueño de la tienda para zurdos 'La zurdería'",
+      "caracteristicas": [
+        "Religioso",
+        "Vecino servicial",
+        "Optimista",
+        "Viudo",
+        "Excesivamente educado",
+        "Respetuoso",
+        "Siempre dispuesto a ayudar",
+        "A veces ingenuo"
+      ],
+      "familia": ["Rod Flanders", "Todd Flanders"]
+    },
+    {
+      "id": "1e2b3c4d-5f6a-7e8b-9c0d-a1b2c3d4e5f6",
+      "nombre": "Milhouse Van Houten",
+      "edad": 10,
+      "ocupacion": "Estudiante",
+      "caracteristicas": [
+        "Tímido",
+        "Usa gafas",
+        "Mejor amigo de Bart",
+        "Enamorado de Lisa",
+        "Ingenuo",
+        "Torpe",
+        "A veces miedoso",
+        "Leal"
+      ],
+      "familia": ["Kirk Van Houten", "Luann Van Houten"]
+    },
+    {
+      "id": "3f6a5b4c-7e8d-9f0b-1c2d-a3b4c5d6e7f8",
+      "nombre": "Montgomery Burns",
+      "edad": 104,
+      "ocupacion": "Dueño de la planta nuclear de Springfield",
+      "caracteristicas": [
+        "Avaro",
+        "Anciano",
+        "Malvado",
+        "Jefe de Homer",
+        "Manipulador",
+        "Despiadado",
+        "Egoísta",
+        "Rico"
+      ],
+      "familia": ["Larry Burns"]
+    },
+    {
+      "id": "9a8b7c6d-5e4f-3d2c-1b0e-a9b8c7d6e5f4",
+      "nombre": "Krusty el Payaso",
+      "edad": 52,
+      "ocupacion": "Payaso de televisión",
+      "caracteristicas": [
+        "Divertido",
+        "Desorganizado",
+        "Fumador",
+        "Amigo de Bart",
+        "Cínico",
+        "Propenso a vicios",
+        "Conduce un programa infantil",
+        "A veces triste"
+      ],
+      "familia": ["Hyman Krustofski"]
+    },
+    {
+      "id": "d1c2b3a4-e5f6-7g8h-9i0j-k1l2m3n4o5p6",
+      "nombre": "Apu Nahasapeemapetilon",
+      "edad": 45,
+      "ocupacion": "Dueño del Kwik-E-Mart",
+      "caracteristicas": [
+        "Trabajador",
+        "Educado",
+        "Padre de octillizos",
+        "Amigo de Homer",
+        "Culturalmente rico",
+        "A veces explotado",
+        "Estudioso",
+        "Buen negociante"
+      ],
+      "familia": ["Manjula Nahasapeemapetilon", "Octillizos Nahasapeemapetilon"]
+    },
+    {
+      "id": "5f4e3d2c-1b0a-9c8d-7e6f-5g4h3i2j1k0l",
+      "nombre": "Seymour Skinner",
+      "edad": 44,
+      "ocupacion": "Director de la escuela primaria de Springfield",
+      "caracteristicas": [
+        "Estricto",
+        "Respetuoso",
+        "Vive con su madre",
+        "Veterano de guerra",
+        "Apasionado por la educación",
+        "Sujeto a la autoridad de su madre",
+        "Leal",
+        "Comprometido"
+      ],
+      "familia": ["Agnes Skinner"]
+    },
+    {
+      "id": "8d7f9b4a-3c2e-5f6a-7b8d-9e0f1a2b3c4d",
+      "nombre": "Moe Szyslak",
+      "edad": 48,
+      "ocupacion": "Dueño de la Taberna de Moe",
+      "caracteristicas": [
+        "Amargado",
+        "Cínico",
+        "Amigo de Homer",
+        "Barman",
+        "Solitario",
+        "Desesperado por amor",
+        "Con humor negro",
+        "Leal a sus amigos"
+      ],
+      "familia": []
+    },
+    {
+      "id": "7e6d5c4b-3a2f-1b0d-9c8e-7f6g5h4i3j2k",
+      "nombre": "Ralph Wiggum",
+      "edad": 8,
+      "ocupacion": "Estudiante",
+      "caracteristicas": [
+        "Ingenuo",
+        "Tonto",
+        "Hijo del jefe de policía",
+        "Simpático",
+        "Inocente",
+        "Desconcertante",
+        "Curioso",
+        "Divertido"
+      ],
+      "familia": ["Clancy Wiggum", "Sarah Wiggum"]
+    },
+    {
+      "id": "6e5d4c3b-2a1f-9b0d-8c7e-6f5g4h3i2j1k",
+      "nombre": "Nelson Muntz",
+      "edad": 12,
+      "ocupacion": "Estudiante",
+      "caracteristicas": [
+        "Bully",
+        "Rudo",
+        "Hijo de madre soltera",
+        "Complicado",
+        "Sarcástico",
+        "En realidad inseguro",
+        "Líder de los matones",
+        "A veces muestra su lado vulnerable"
+      ],
+      "familia": ["Mrs. Muntz"]
+    },
+    {
+      "id": "5d4c3b2a-1f0e-9b8d-7c6e-5f4g3h2i1j0k",
+      "nombre": "Edna Krabappel",
+      "edad": 40,
+      "ocupacion": "Maestra de la escuela primaria de Springfield",
+      "caracteristicas": [
+        "Sarcasmo",
+        "Soltera",
+        "Profesora de Bart",
+        "Fumadora",
+        "Desencantada",
+        "A veces cínica",
+        "Compasiva",
+        "Deseosa de amor"
+      ],
+      "familia": []
+    }
+  ]
