@@ -13,7 +13,7 @@ interface CharacterEntity {
 
 export class CreateCharacterDto implements CharacterEntity {
   @IsString()
-  readonly nombre: string;//define propiedades inmutables 
+   nombre: string;//define propiedades inmutables 
 
   @IsNumber()
   readonly edad: number;

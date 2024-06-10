@@ -42,14 +42,25 @@ export class CharactersService {
     }
   
   }
+//metodo para busqueda de persobaje por nombre
+  async getByName(name: string): Promise<ICharacters[]> {
+    const data = await this.loadData();
+    const characters = data.filter((character) => character.nombre.toLowerCase().includes(name.toLowerCase()));
+    //Filtra los personajes cuyo nombre incluye la cadena de búsqueda name, sin tener en cuenta mayúsculas y minúsculas.
+    if (characters.length === 0) {
+      throw new NotFoundException(`No se encontraron personajes con nombre:'${name}'`);
+    }
+    return characters;
+  }
+
 // Método que crea un nuevo personaje.
-   async create(newCharacter: CreateCharacterDto): Promise<ICharacters> {
+   async create(newCharacter: CreateCharacterDto): Promise<{ message: string; Character: ICharacters }> {
     const data = await this.loadData();
    const Character: ICharacters = { id: uuidv4(), ...newCharacter };
    // Crea un nuevo objeto personaje con un ID único y los datos proporcionados.
     data.push(Character);// Agrega el nuevo personaje al array.
     await this.saveData(data);// Guarda los datos actualizados en el archivo JSON.
-    return Character;
+    return  { message: 'Personaje creado satisfatoriamente', Character };
   }
   
   async update(id: string, updateCharacterDto: UpdateCharacterDto): Promise<ICharacters> {
@@ -65,8 +76,14 @@ export class CharactersService {
     return data[index];//Devuelve el objeto del personaje actualizado.
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} character`;
+  async delete(id: string): Promise<void> {
+    const data = await this.loadData();
+    const index = data.findIndex((character) => character.id === id);
+    if (index === -1) {
+      throw new NotFoundException(`Personaje con id'${id}' no encontrado`);
+    }
+    data.splice(index, 1); // Eliminar el personaje del array
+    await this.saveData(data); // Guardar los cambios en el archivo
   }
 
 }
