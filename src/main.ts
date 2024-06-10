@@ -7,7 +7,8 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe({
     whitelist: true
   }))
-
+  const nameToSearch = "nombre_que_quieres_buscar";
+  console.log("Nombre de búsqueda:", nameToSearch);
   app.enableCors({
     origin: true,
     // CORS HTTP methods

@@ -7,6 +7,7 @@ import { ICharacters } from './interface/interface.characters';
 import { v4 as uuidv4 } from 'uuid';
 
 
+
 @Injectable()
 export class CharactersService {
   private filePath: string;// Define una propiedad filePath para almacenar la ruta del archivo JSON.
@@ -45,9 +46,9 @@ export class CharactersService {
 //metodo para busqueda de persobaje por nombre
   async getByName(name: string): Promise<ICharacters[]> {
     const data = await this.loadData();
-    const characters = data.filter((character) => character.nombre.toLowerCase().includes(name.toLowerCase()));
+    const characters = data.filter((character) =>  character.nombre.toLowerCase().includes(name.toLowerCase()));
     //Filtra los personajes cuyo nombre incluye la cadena de búsqueda name, sin tener en cuenta mayúsculas y minúsculas.
-    if (characters.length === 0) {
+    if (characters.length === 0) {console.log("No se encontraron personajes con el nombre:", name);
       throw new NotFoundException(`No se encontraron personajes con nombre:'${name}'`);
     }
     return characters;

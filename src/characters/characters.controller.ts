@@ -23,7 +23,7 @@ export class CharactersController {
     // llama al método del servicio para buscar un personaje por su ID y devolverlo.
   }
 
-  @Get('search')
+  @Get()
   findByName(@Query('name') name: string): Promise<ICharacters[]> {
     return this.charactersService.getByName(name);
   }
