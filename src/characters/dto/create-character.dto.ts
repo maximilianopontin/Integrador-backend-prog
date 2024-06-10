@@ -13,7 +13,7 @@ interface CharacterEntity {
 
 export class CreateCharacterDto implements CharacterEntity {
   @IsString()
-  readonly nombre: string;
+  readonly nombre: string;//define propiedades inmutables 
 
   @IsNumber()
   readonly edad: number;
@@ -22,11 +22,13 @@ export class CreateCharacterDto implements CharacterEntity {
   readonly ocupacion: string;
 
   @IsArray()
-  @ArrayNotEmpty()
-  readonly caracteristicas: string[];
+  @ArrayNotEmpty()//arreglo no esté vacío
+  @IsString({ each: true })//se asegura de que todos los elementos del array sean cadenas de texto válidas.
+  readonly caracteristicas: string[]; 
 
   @IsArray()
   @ArrayNotEmpty()
+  @IsString({ each: true })
   readonly familia: string[];
 
   // Restringe cualquier otra clave en el DTO que no esté en la interfaz CharacterEntity

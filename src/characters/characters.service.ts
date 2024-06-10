@@ -38,7 +38,7 @@ export class CharactersService {
       if (Object.keys(character).length)
       return character;
     } catch (error) { //se lanza excepcion 
-      throw new NotFoundException(`Track con id '${id}' no existe`);
+      throw new NotFoundException(`Personaje con id '${id}' no existe`);
     }
   
   }
@@ -52,8 +52,17 @@ export class CharactersService {
     return Character;
   }
   
-  update(id: number, updateCharacterDto: UpdateCharacterDto) {
-    return `This action updates a #${id} character`;
+  async update(id: string, updateCharacterDto: UpdateCharacterDto): Promise<ICharacters> {
+    const data = await this.loadData();
+    const index = data.findIndex((character) => character.id === id);// Busca el índice del personaje en el array cuyo id coincide con el id proporcionado como parámetro.
+    // Utiliza el método findIndex para encontrar la primera coincidencia y devuelve el índice correspondiente.
+    if (index === -1) {// si no se encontró ningún personaje con el id dado.
+      throw new NotFoundException(`Personaje con id '${id}' no encontrado`);
+    }
+    data[index] = { ...data[index], ...updateCharacterDto };// Actualiza el personaje encontrado combinando sus datos actuales (data[index]) con los nuevos datos proporcionados en updateCharacterDto.
+    // Utiliza el operador de propagación (...) para copiar las propiedades del objeto existente y del DTO de actualización, sobreescribiendo las propiedades existentes con las nuevas si están presentes.
+    await this.saveData(data);
+    return data[index];//Devuelve el objeto del personaje actualizado.
   }
 
   remove(id: number) {

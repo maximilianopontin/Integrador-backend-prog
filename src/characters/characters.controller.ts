@@ -29,9 +29,9 @@ export class CharactersController {
     // llama al método del servicio para buscar un personaje por su ID y devolverlo.
   }
 
-  @Patch(':id')// Maneja las solicitudes PATCH a la ruta /characters/:id.s
-  update(@Param('id') id: string, @Body() updateCharacterDto: UpdateCharacterDto) {
-    return this.charactersService.update(+id, updateCharacterDto);
+  @Patch(':id')//El método update utiliza @Param('id') para obtener el ID del personaje y @Body() para obtener los datos de actualización. 
+  update(@Param('id') id: string, @Body() updateCharacterDto: UpdateCharacterDto): Promise<ICharacters> {
+    return this.charactersService.update(id, updateCharacterDto); //Llama al método update del servicio para aplicar las actualizaciones.
   }
 
   @Delete(':id')// Maneja las solicitudes DELETE a la ruta /characters/:id.
