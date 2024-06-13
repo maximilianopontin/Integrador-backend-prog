@@ -13,7 +13,7 @@ export class CharactersService {
   private filePath: string;// Define una propiedad filePath para almacenar la ruta del archivo JSON.
 
   constructor() {
-    this.filePath = join(__dirname ,'..','model', 'characters.json');// Inicializa filePath con la ruta al archivo characters.json.
+    this.filePath = join(__dirname, '..','..','src','model', 'characters.json');// Inicializa filePath con la ruta al archivo characters.json.
   }
   //carga los datos del archivo JSON.
   private async loadData(): Promise<ICharacters[]> {
