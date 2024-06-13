@@ -43,12 +43,12 @@ export class CharactersService {
     }
   
   }
-//metodo para busqueda de persobaje por nombre
+//metodo para busqueda de personaje por nombre
   async getByName(name: string): Promise<ICharacters[]> {
     const data = await this.loadData();
     const characters = data.filter((character) =>  character.nombre.toLowerCase().includes(name.toLowerCase()));
     //Filtra los personajes cuyo nombre incluye la cadena de búsqueda name, sin tener en cuenta mayúsculas y minúsculas.
-    if (characters.length === 0) {console.log("No se encontraron personajes con el nombre:", name);
+    if (characters.length === 0) {// Si no se encontraron personajes, lanza una excepción
       throw new NotFoundException(`No se encontraron personajes con nombre:'${name}'`);
     }
     return characters;

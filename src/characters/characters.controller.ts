@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete,Query} from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
 import { CharactersService } from './characters.service';
 import { CreateCharacterDto } from './dto/create-character.dto';
 import { UpdateCharacterDto } from './dto/update-character.dto';
@@ -23,11 +23,12 @@ export class CharactersController {
     // llama al método del servicio para buscar un personaje por su ID y devolverlo.
   }
 
-  @Get()
+  //http://localhost:3000/characters/search/name?name=simpson
+  @Get('search/name')
   findByName(@Query('name') name: string): Promise<ICharacters[]> {
     return this.charactersService.getByName(name);
   }
-  
+
   @Post()// Maneja las solicitudes POST a la ruta /characters.
   create(@Body() newCharacter: CreateCharacterDto) {
     // Utiliza el decorador @Body() para obtener los datos del cuerpo de la solicitud.
