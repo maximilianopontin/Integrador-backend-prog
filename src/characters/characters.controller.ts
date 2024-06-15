@@ -1,8 +1,9 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query ,UsePipes,ValidationPipe} from '@nestjs/common';
 import { CharactersService } from './characters.service';
 import { CreateCharacterDto } from './dto/create-character.dto';
 import { UpdateCharacterDto } from './dto/update-character.dto';
 import { ICharacters } from './interface/interface.characters';
+import { IdParamDto } from './dto/id-paramdto';
 
 
 @Controller('characters')// todas las rutas definidas en este controlador estarán precedidas por /characters
@@ -17,9 +18,10 @@ export class CharactersController {
   }
 
   @Get(':id')// maneja solicitudes GET a la ruta /characters/:id. 
-  async getOneCharacter(@Param('id') id: string): Promise<ICharacters> {
+  @UsePipes(new ValidationPipe({ transform: true }))
+  async getOneCharacter(@Param()params:IdParamDto): Promise<ICharacters> {
     //Utiliza el decorador @Param('id') para obtener el valor del parámetro de la URL
-    return this.charactersService.getOneCharacter(id);
+    return this.charactersService.getOneCharacter(params.id);
     // llama al método del servicio para buscar un personaje por su ID y devolverlo.
   }
 
@@ -41,7 +43,7 @@ export class CharactersController {
   }
 
   @Delete(':id')//solicitudes DELETE en la ruta /characters/:id.
-  remove(@Param('id') id: string): Promise<void> { //decorador @Param('id') para obtener el valor del parámetro de la URL, que corresponde al id del personaje a eliminar.
+  remove(@Param('id') id: string) : Promise <string> { //decorador @Param('id') para obtener el valor del parámetro de la URL, que corresponde al id del personaje a eliminar.
     return this.charactersService.delete(id);
   }
 }

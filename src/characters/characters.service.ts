@@ -77,7 +77,7 @@ export class CharactersService {
     return data[index];//Devuelve el objeto del personaje actualizado.
   }
 
-  async delete(id: string): Promise<void> {
+  async delete(id: string): Promise<string> {
     const data = await this.loadData();
     const index = data.findIndex((character) => character.id === id);
     if (index === -1) {
@@ -85,8 +85,8 @@ export class CharactersService {
     }
     data.splice(index, 1); // Eliminar el personaje del array
     await this.saveData(data); // Guardar los cambios en el archivo
-  }
+   return `Personaje con id '${id}' eliminado exitosamente`;
 
 }
-
+}
 

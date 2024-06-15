@@ -1,6 +1,6 @@
 // create-character.dto.ts
 
-import { IsString, IsNumber, IsArray, ArrayNotEmpty } from 'class-validator';
+import { IsString, IsNumber, IsArray, ArrayNotEmpty,Min } from 'class-validator';
 
 
 interface CharacterEntity {
@@ -13,23 +13,24 @@ interface CharacterEntity {
 
 export class CreateCharacterDto implements CharacterEntity {
   @IsString()
-  readonly nombre: string;//define propiedades inmutables 
+  nombre: string;
 
   @IsNumber()
-  readonly edad: number;
+  @Min(1)
+  edad: number;
 
   @IsString()
-  readonly ocupacion: string;
+  ocupacion: string;
 
   @IsArray()
   @ArrayNotEmpty()//arreglo no esté vacío
   @IsString({ each: true })//se asegura de que todos los elementos del array sean cadenas de texto válidas.
-  readonly caracteristicas: string[]; 
+  caracteristicas: string[];
 
   @IsArray()
   @ArrayNotEmpty()
   @IsString({ each: true })
-  readonly familia: string[];
+  familia: string[];
 
   // Restringe cualquier otra clave en el DTO que no esté en la interfaz CharacterEntity
   [key: string]: any;
