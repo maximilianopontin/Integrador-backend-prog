@@ -1,8 +1,8 @@
 import { IsString, Length, Matches } from 'class-validator';
-
+//Usa class-validator para asegurar que el ID es una cadena y que coincide con un patrón de 32 caracteres.
 export class IdParamDto {
   @IsString()
-  @Length(24, 24, { message: 'El ID debe tener exactamente 24 caracteres.' })
-  @Matches(/^[0-9a-fA-F]{24}$/, { message: 'El ID debe ser un hexágono válido de 24 caracteres.' })
+  @Matches(/^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/,
+    { message: 'El ID debe ser un UUID válido de 36 caracteres con guiones.' },)
   id: string;
 }

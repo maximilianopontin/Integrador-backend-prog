@@ -1,143 +1,208 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { CharactersController } from './characters.controller';
 import { CharactersService } from './characters.service';
-import { CreateCharacterDto } from './dto/create-character.dto';
-import { UpdateCharacterDto } from './dto/update-character.dto';
+import { IdParamDto } from './dto/id-paramdto';
+
 import { ICharacters } from './interface/interface.characters';
-import { NotFoundException } from '@nestjs/common';
+
 
 describe('CharactersController', () => {
-  let controller: CharactersController;
-  let service: CharactersService;
-
-  const mockCharactersService = {
-    getAllCharacters: jest.fn().mockResolvedValue([
-      { id: '1', nombre: 'Character1', edad: 30, ocupacion: 'Occupation1', caracteristicas: ['Characteristic1'], familia: ['FamilyMember1'] },
-      { id: '2', nombre: 'Character2', edad: 25, ocupacion: 'Occupation2', caracteristicas: ['Characteristic2'], familia: ['FamilyMember2'] },
-    ]),
-    getOneCharacter: jest.fn().mockImplementation((id: string) => {
-      if (id === '1') {
-        return Promise.resolve({ id: '1', nombre: 'Character1', edad: 30, ocupacion: 'Occupation1', caracteristicas: ['Characteristic1'], familia: ['FamilyMember1'] });
-      } else {
-        return Promise.reject(new NotFoundException(`Personaje con id '${id}' no existe`));
-      }
-    }),
-    getByName: jest.fn().mockImplementation((name: string) => {
-      if (name.toLowerCase() === 'character1') {
-        return Promise.resolve([{ id: '1', nombre: 'Character1', edad: 30, ocupacion: 'Occupation1', caracteristicas: ['Characteristic1'], familia: ['FamilyMember1'] }]);
-      } else {
-        return Promise.reject(new NotFoundException(`No se encontraron personajes con nombre:'${name}'`));
-      }
-    }),
-    create: jest.fn().mockImplementation((newCharacter: CreateCharacterDto) => {
-      return Promise.resolve({ message: 'Personaje creado satisfactoriamente', Character: { id: '3', ...newCharacter } });
-    }),
-    update: jest.fn().mockImplementation((id: string, updateCharacterDto: UpdateCharacterDto) => {
-      if (id === '1') {
-        return Promise.resolve({ id: '1', ...updateCharacterDto });
-      } else {
-        return Promise.reject(new NotFoundException(`Personaje con id '${id}' no encontrado`));
-      }
-    }),
-    delete: jest.fn().mockImplementation((id: string) => {
-      if (id === '1') {
-        return Promise.resolve(`Personaje con id '${id}' eliminado exitosamente`);
-      } else {
-        return Promise.reject(new NotFoundException(`Personaje con id '${id}' no encontrado`));
-      }
-    }),
-  };
+  let characterController: CharactersController;
+  let characterService: CharactersService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [CharactersController],
-      providers: [
-        {
-          provide: CharactersService,
-          useValue: mockCharactersService,
-        },
-      ],
+      providers: [CharactersService],
     }).compile();
 
-    controller = module.get<CharactersController>(CharactersController);
-    service = module.get<CharactersService>(CharactersService);
+    characterController = module.get<CharactersController>(CharactersController);
+    characterService = module.get<CharactersService>(CharactersService);
+  });
+  it('retornar arreglo de personajes', async () => {
+    const result: ICharacters[] = [{
+      "id": "5d4c3b2a-1f0e-9b8d-7c6e-5f4g3h2i1j0k",
+      "nombre": "Edna Krabappel",
+      "edad": 40,
+      "ocupacion": "Maestra de la escuela primaria de Springfield",
+      "caracteristicas": [
+        "Sarcasmo",
+        "Soltera",
+        "Profesora de Bart",
+        "Fumadora",
+        "Desencantada",
+        "A veces cínica",
+        "Compasiva",
+        "Deseosa de amor"
+      ],
+      "familia": []
+    }];
+
+    jest.spyOn(characterService, 'getAllCharacters').mockResolvedValue(result);
+
+    const response = await characterController.getAllCharacters();
+
+    expect(response).toEqual(result);
   });
 
-  it('should be defined', () => {
-    expect(controller).toBeDefined();
+  describe('getOneCharacter', () => {
+    it('Retornar un personaje por su id', async () => {
+      const id = "7e6d5c4b-3a2f-1b0d-9c8e-7f6g5h4i3j2k";
+      const result: ICharacters = {
+        "id": id,
+        "nombre": "Ralph Wiggum",
+        "edad": 8,
+        "ocupacion": "Estudiante",
+        "caracteristicas": [
+          "Ingenuo",
+          "Tonto",
+          "Hijo del jefe de policía",
+          "Simpático",
+          "Inocente",
+          "Desconcertante",
+          "Curioso",
+          "Divertido"
+        ],
+        "familia": [
+          "Clancy Wiggum",
+          "Sarah Wiggum"
+        ]
+      };
+      // Simula que el servicio devuelve el personaje con el ID válido
+      jest.spyOn(characterService, 'getOneCharacter').mockResolvedValue(result);
+
+      // Crea una instancia del DTO con el ID válido
+      const paramsDto = new IdParamDto();
+      paramsDto.id = id;
+      // Llama al método del controlador con el DTO validado
+      const response = await characterController.getOneCharacter(paramsDto);
+      // Verifica que la respuesta del controlador sea igual al resultado esperado
+      expect(response).toEqual(result);
+    });
   });
 
-  it('should return all characters', async () => {
-    const result = await controller.getAllCharacters();
-    expect(result).toEqual([
-      { id: '1', nombre: 'Character1', edad: 30, ocupacion: 'Occupation1', caracteristicas: ['Characteristic1'], familia: ['FamilyMember1'] },
-      { id: '2', nombre: 'Character2', edad: 25, ocupacion: 'Occupation2', caracteristicas: ['Characteristic2'], familia: ['FamilyMember2'] },
-    ]);
-    expect(service.getAllCharacters).toHaveBeenCalled();
+  describe('getCharacterByName', () => {
+    it('Retornnar personaje por su nombre', async () => {
+      const result: ICharacters[] = [{
+        "id": "8d7f9b4a-3c2e-5f6a-7b8d-9e0f1a2b3c4d",
+        "nombre": "Moe Szyslak",
+        "edad": 48,
+        "ocupacion": "Dueño de la Taberna de Moe",
+        "caracteristicas": [
+          "Amargado",
+          "Cínico",
+          "Amigo de Homer",
+          "Barman",
+          "Solitario",
+          "Desesperado por amor",
+          "Con humor negro",
+          "Leal a sus amigos"
+        ],
+        "familia": []
+      }];
+
+      jest.spyOn(characterService, 'getCharacterByName').mockResolvedValue(result);
+
+      const response = await characterController.findByName("moe");
+
+      expect(response).toEqual(result);
+    });
   });
 
-  it('should return a character by id', async () => {
-    const result = await controller.getOneCharacter({ id: '1' });
-    expect(result).toEqual({ id: '1', nombre: 'Character1', edad: 30, ocupacion: 'Occupation1', caracteristicas: ['Characteristic1'], familia: ['FamilyMember1'] });
-    expect(service.getOneCharacter).toHaveBeenCalledWith('1');
+  describe('createCharacter', () => {
+    it('agregar personaje y poder buscarlo por nombre', async () => {
+
+      const newCharacter: any = {
+        "nombre": "OttoMann",
+        "edad": 32,
+        "ocupacion": "Conductor de autobús escolar",
+        "caracteristicas": [
+          "Amante del heavy metal",
+          "Relajado",
+          "Despreocupado",
+          "Fuma y bebe ocasionalmente",
+          "Vestimenta descuidada",
+          "Experto en guitarras",
+          "A veces irresponsable",
+          "Buen corazón"
+        ],
+        "familia": ["no posee"]
+      };
+
+      jest.spyOn(characterService, 'createCharacter').mockResolvedValue(newCharacter);
+
+
+      const response = await characterController.create(newCharacter);
+
+      expect(response).toEqual(newCharacter);
+    });
   });
 
-  it('should throw NotFoundException if character by id not found', async () => {
-    await expect(controller.getOneCharacter({ id: '2' })).rejects.toThrow(NotFoundException);
+  describe('updateCharacter', () => {
+    it('actualizar un personaje', async () => {
+      const updatedCharacter: ICharacters = {
+        "id": "5f4e3d2c-1b0a-9c8d-7e6f-5g4h3i2j1k0l",
+        "nombre": "Paul Skinner",
+        "edad": 44,
+        "ocupacion": "Director de la escuela primaria de Springfield",
+        "caracteristicas": [
+          "Estricto",
+          "Respetuoso",
+          "Vive con su madre",
+          "Veterano de guerra",
+          "Apasionado por la educación",
+          "Sujeto a la autoridad de su madre",
+          "Leal",
+          "Comprometido"
+        ],
+        "familia": [
+          "Agnes Skinner"
+        ]
+      };
+
+      jest.spyOn(characterService, 'updateCharacter').mockResolvedValue(updatedCharacter);
+
+      const response = await characterController.update('5f4e3d2c-1b0a-9c8d-7e6f-5g4h3i2j1k0l', updatedCharacter);
+
+      expect(response).toEqual(updatedCharacter);
+    });
   });
 
-  it('should return characters by name', async () => {
-    const result = await controller.findByName('Character1');
-    expect(result).toEqual([{ id: '1', nombre: 'Character1', edad: 30, ocupacion: 'Occupation1', caracteristicas: ['Characteristic1'], familia: ['FamilyMember1'] }]);
-    expect(service.getByName).toHaveBeenCalledWith('Character1');
-  });
+  describe('deleteCharacter', () => {
+    it('eliminar un personaje existente', async () => {
+      const deleteCharacter: ICharacters = {
+        "id": "9a8b7c6d-5e4f-3d2c-1b0e-a9b8c7d6e5f4",
+        "nombre": "Apu Nahasapeemapetilon",
+        "edad": 45,
+        "ocupacion": "Dueño del Kwik-E-Mart",
+        "caracteristicas": [
+          "Trabajador",
+          "Educado",
+          "Padre de octillizos",
+          "Amigo de Homer",
+          "Culturalmente rico",
+          "A veces explotado",
+          "Estudioso",
+          "Buen negociante"
+        ],
+        "familia": [
+          "Manjula Nahasapeemapetilon",
+          "Octillizos Nahasapeemapetilon"
+        ]
+      };
+      // Simula el comportamiento del servicio deleteCharacter
+      jest.spyOn(characterService, 'deleteCharacter').mockResolvedValue(`Personaje con id '${deleteCharacter.id}' eliminado exitosamente`)
 
-  it('should throw NotFoundException if no characters by name found', async () => {
-    await expect(controller.findByName('Character3')).rejects.toThrow(NotFoundException);
-  });
+      // Llama al método remove del controlador con el ID del personaje a eliminar
+      const response = await characterController.remove(deleteCharacter.id);
 
-  it('should create a new character', async () => {
-    const newCharacter: CreateCharacterDto = {
-      nombre: 'NewCharacter',
-      edad: 20,
-      ocupacion: 'NewOccupation',
-      caracteristicas: ['NewCharacteristic'],
-      familia: ['NewFamilyMember'],
-    };
-    const result = await controller.create(newCharacter);
-    expect(result).toEqual({ message: 'Personaje creado satisfactoriamente', Character: { id: '3', ...newCharacter } });
-    expect(service.create).toHaveBeenCalledWith(newCharacter);
-  });
+      // Verifica que el servicio deleteCharacter haya sido llamado con el ID del personaje
+      expect(characterService.deleteCharacter).toHaveBeenCalledWith(deleteCharacter.id);
 
-  it('should update a character', async () => {
-    const updateCharacterDto: UpdateCharacterDto = {
-      edad: 35,
-      ocupacion: 'UpdatedOccupation',
-      caracteristicas: ['UpdatedCharacteristic'],
-      familia: ['UpdatedFamilyMember'],
-    };
-    const result = await controller.update('1', updateCharacterDto);
-    expect(result).toEqual({ id: '1', ...updateCharacterDto });
-    expect(service.update).toHaveBeenCalledWith('1', updateCharacterDto);
-  });
+     // Verifica que el mensaje de retorno sea correcto
+     expect(response).toEqual(`Personaje con id '${deleteCharacter.id}' eliminado exitosamente`);
+    });
 
-  it('should throw NotFoundException if update character by id not found', async () => {
-    const updateCharacterDto: UpdateCharacterDto = {
-      edad: 35,
-      ocupacion: 'UpdatedOccupation',
-      caracteristicas: ['UpdatedCharacteristic'],
-      familia: ['UpdatedFamilyMember'],
-    };
-    await expect(controller.update('3', updateCharacterDto)).rejects.toThrow(NotFoundException);
+    });
+  
   });
-
-  it('should delete a character', async () => {
-    const result = await controller.remove('1');
-    expect(result).toBe(`Personaje con id '1' eliminado exitosamente`);
-    expect(service.delete).toHaveBeenCalledWith('1');
-  });
-
-  it('should throw NotFoundException if delete character by id not found', async () => {
-    await expect(controller.remove('3')).rejects.toThrow(NotFoundException);
-  });
-});

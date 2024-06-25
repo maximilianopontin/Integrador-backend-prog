@@ -18,9 +18,10 @@ export class CharactersController {
   }
 
   @Get(':id')// maneja solicitudes GET a la ruta /characters/:id. 
-  @UsePipes(new ValidationPipe({ transform: true }))
+  @UsePipes(new ValidationPipe({ transform: true }))// valida y transforma automáticamente los datos de entrada basados en reglas definidas en IdParamDto
   async getOneCharacter(@Param()params:IdParamDto): Promise<ICharacters> {
     //Utiliza el decorador @Param('id') para obtener el valor del parámetro de la URL
+    //el objeto params debe coincidir con la estructura definida en IdParamDto
     return this.charactersService.getOneCharacter(params.id);
     // llama al método del servicio para buscar un personaje por su ID y devolverlo.
   }
@@ -28,22 +29,22 @@ export class CharactersController {
   //http://localhost:3000/characters/search/name?name=simpson
   @Get('search/name')
   findByName(@Query('name') name: string): Promise<ICharacters[]> {
-    return this.charactersService.getByName(name);
+    return this.charactersService.getCharacterByName(name);
   }
 
   @Post()// Maneja las solicitudes POST a la ruta /characters.
   create(@Body() newCharacter: CreateCharacterDto) {
     // Utiliza el decorador @Body() para obtener los datos del cuerpo de la solicitud.
-    return this.charactersService.create(newCharacter);
+    return this.charactersService.createCharacter(newCharacter);
     // Llama al método del servicio para crear un nuevo personaje.
   }
   @Patch(':id')//El método update utiliza @Param('id') para obtener el ID del personaje y @Body() para obtener los datos de actualización. 
   update(@Param('id') id: string, @Body() updateCharacterDto: UpdateCharacterDto): Promise<ICharacters> {
-    return this.charactersService.update(id, updateCharacterDto); //Llama al método update del servicio para aplicar las actualizaciones.
+    return this.charactersService.updateCharacter(id, updateCharacterDto); //Llama al método update del servicio para aplicar las actualizaciones.
   }
 
   @Delete(':id')//solicitudes DELETE en la ruta /characters/:id.
   remove(@Param('id') id: string) : Promise <string> { //decorador @Param('id') para obtener el valor del parámetro de la URL, que corresponde al id del personaje a eliminar.
-    return this.charactersService.delete(id);
+    return this.charactersService.deleteCharacter(id);
   }
 }
