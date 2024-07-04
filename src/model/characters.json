@@ -211,7 +211,7 @@
     ]
   },
   {
-    "id": "d1c2b3a4-e5f6-7g8h-9i0j-k1l2m3n4o5p6",
+    "id": "d1c2b3a4-e5f6-4a8b-9f0d-a1b2c3d4e5f6",
     "nombre": "Apu Nahasapeemapetilon",
     "edad": 45,
     "ocupacion": "Dueño del Kwik-E-Mart",
@@ -231,7 +231,7 @@
     ]
   },
   {
-    "id": "5f4e3d2c-1b0a-9c8d-7e6f-5g4h3i2j1k0l",
+    "id": "5f4e3d2c-1b0a-9c8d-7e6f-5d4c3b2a1f0e",
     "nombre": "Seymour Skinner",
     "edad": 44,
     "ocupacion": "Director de la escuela primaria de Springfield",
@@ -267,10 +267,10 @@
     "familia": []
   },
   {
-    "id": "7e6d5c4b-3a2f-1b0d-9c8e-7f6g5h4i3j2k",
+    "id": "7e6d5c4b-3a2f-4b0d-9c8e-7f6e5d4c3b2a",
     "nombre": "Ralph Wiggum",
     "edad": 8,
-    "ocupacion": "Estudiante",
+    "ocupacion": "Estudiante de primer año",
     "caracteristicas": [
       "Ingenuo",
       "Tonto",
@@ -287,8 +287,8 @@
     ]
   },
   {
-    "id": "6e5d4c3b-2a1f-9b0d-8c7e-6f5g4h3i2j1k",
-    "nombre": "Nelson ernesto Muntz",
+    "id": "6e5d4c3b-2a1f-9b0d-8c7e-5d4c3b2a1f0e",
+    "nombre": "Nelson Muntz",
     "edad": 12,
     "ocupacion": "Estudiante",
     "caracteristicas": [
@@ -297,6 +297,7 @@
       "Complicado",
       "Sarcástico",
       "En realidad inseguro",
+      "Líder de los matones",
       "A veces muestra su lado vulnerable"
     ],
     "familia": [
@@ -304,7 +305,7 @@
     ]
   },
   {
-    "id": "5d4c3b2a-1f0e-9b8d-7c6e-5f4g3h2i1j0k",
+    "id": "5d4c3b2a-1f0e-9b8d-7c6e-5f4e3d2c1b0a",
     "nombre": "Edna Krabappel",
     "edad": 40,
     "ocupacion": "Maestra de la escuela primaria de Springfield",

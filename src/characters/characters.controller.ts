@@ -19,7 +19,7 @@ export class CharactersController {
 
   @Get(':id')// maneja solicitudes GET a la ruta /characters/:id. 
   @UsePipes(new ValidationPipe({ transform: true }))// valida y transforma automáticamente los datos de entrada basados en reglas definidas en IdParamDto
-  async getOneCharacter(@Param()params:IdParamDto): Promise<ICharacters> {
+   getOneCharacter(@Param()params:IdParamDto): Promise<ICharacters> {
     //Utiliza el decorador @Param('id') para obtener el valor del parámetro de la URL
     //el objeto params debe coincidir con la estructura definida en IdParamDto
     return this.charactersService.getOneCharacter(params.id);
