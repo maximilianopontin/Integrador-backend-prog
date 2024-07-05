@@ -108,30 +108,7 @@
       "Bart Simpson",
       "Lisa Simpson"
     ]
-  },
-  {
-    "id": "57c924d5-e0f7-4f47-8b23-95d51a93a8a3",
-    "nombre": "Abraham Simpson",
-    "edad": 83,
-    "ocupacion": "Jubilado",
-    "caracteristicas": [
-      "Olvidadizo",
-      "Contador de historias",
-      "Veterano de guerra",
-      "Vive en un hogar de ancianos",
-      "Cascarrabias",
-      "Nostálgico",
-      "Exagerado",
-      "A veces incoherente"
-    ],
-    "familia": [
-      "Homer Simpson",
-      "Marge Simpson",
-      "Bart Simpson",
-      "Lisa Simpson",
-      "Maggie Simpson"
-    ]
-  },
+  }, 
   {
     "id": "be48c432-9e0d-41cf-a776-973a3e4fb3a1",
     "nombre": "Ned Flanders",
@@ -268,9 +245,9 @@
   },
   {
     "id": "7e6d5c4b-3a2f-4b0d-9c8e-7f6e5d4c3b2a",
-    "nombre": "Ralph Wiggum",
+    "nombre": "Ralph wiggum",
     "edad": 8,
-    "ocupacion": "Estudiante de primer año",
+    "ocupacion": "Estudiante",
     "caracteristicas": [
       "Ingenuo",
       "Tonto",

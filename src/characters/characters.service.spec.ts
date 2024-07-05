@@ -1,58 +1,92 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { NotFoundException } from '@nestjs/common';
 import { CharactersService } from './characters.service';
-import { ICharacters } from './interface/interface.characters';
-
+import { CreateCharacterDto } from './dto/create-character.dto';
+import { UpdateCharacterDto } from './dto/update-character.dto';
+import { NotFoundException, BadRequestException } from '@nestjs/common';
 
 describe('CharactersService', () => {
-  let characterService: CharactersService;
+  let service: CharactersService;//declara variable para almacenar servicio
 
-  beforeEach(async () => {
+  //se ejecuta antes de cada prueba
+  beforeEach(async () => {//creacion modulo de prueba
     const module: TestingModule = await Test.createTestingModule({
       providers: [CharactersService],
     }).compile();
 
-    characterService = module.get<CharactersService>(CharactersService);
+    service = module.get<CharactersService>(CharactersService);
   });
 
- 
+  //pruebas de funcionalidad:
+
+  //verica que el servicio este definido correctamente
+  it('should be defined', () => {
+    expect(service).toBeDefined();
+  });
+
   describe('getAllCharacters', () => {
-    it('retornar arreglo de personajes', async () => {
-      const result: ICharacters[] = [{
-        "id": "5d4c3b2a-1f0e-9b8d-7c6e-5f4g3h2i1j0k",
-        "nombre": "Edna Krabappel",
-        "edad": 40,
-        "ocupacion": "Maestra de la escuela primaria de Springfield",
-        "caracteristicas": [
-          "Sarcasmo",
-          "Soltera",
-          "Profesora de Bart",
-          "Fumadora",
-          "Desencantada",
-          "A veces cínica",
-          "Compasiva",
-          "Deseosa de amor"
-        ],
-        "familia": []
-      }];
-
-      const spy = jest.spyOn(characterService, 'getAllCharacters').mockResolvedValue(result);
-
-      const response = await characterService.getAllCharacters();
-
-      expect(response).toEqual(result);
-      expect(spy).toHaveBeenCalled();
+    it('verifica si devuelve un arreglo de personajes', async () => {
+      const characters = await service.getAllCharacters();//llama a la funcion y guarda el resultado en characters
+      expect(characters).toBeInstanceOf(Array);//Utiliza expect para verificar que characters sea una instancia de Array.
     });
   });
 
   describe('getOneCharacter', () => {
-    it('retornar un personaje por su id', async () => {
-      const id = "7e6d5c4b-3a2f-1b0d-9c8e-7f6g5h4i3j2k";
-      const result: ICharacters = {
-        "id": id,
-        "nombre": "Ralph Wiggum",
+    it('verifica si devuelve un personaje por su id', async () => {
+      const id = '7e6d5c4b-3a2f-4b0d-9c8e-7f6e5d4c3b2a';
+      const character = await service.getOneCharacter(id);
+      expect(character.id).toEqual(id);//Utiliza expect para asegurar que el ID del personaje devuelto sea igual al ID proporcionado.
+    });
+
+    it('verifica si lanza una excepcion NotFoundException cuando el id no existe', async () => {
+      const id = '7e6d5c4b-3a2f-4b0d-9c8e-7f6e5d4c3b2l';//id no existe
+      await expect(service.getOneCharacter(id)).rejects.toThrow(NotFoundException);
+      //Utiliza expect para verificar que cuando llame a getOneCharacter con id lanza una excepción NotFoundException.
+    });
+  });
+
+  describe('getCharacterByName', () => {
+    it('verifica si devuelve personaje por su nombre valido', async () => {
+      const name = 'moe';
+      const characters = await service.getCharacterByName(name);
+      expect(characters).toBeInstanceOf(Array);
+      expect(characters.length).toBeGreaterThan(0);
+      // Utiliza expect para asegurar que characters tenga una longitud mayor que 0.
+    });
+
+    it('verifica si cuando el nombre no se encuentra lanza una excepcion NotFoundException', async () => {
+      const name = 'noe';
+      await expect(service.getCharacterByName(name)).rejects.toThrow(NotFoundException);
+      //Utiliza expect para verificar que llamar a getCharacterByName con name lance una excepción NotFoundException.
+    });
+  });
+
+  describe('createCharacter', () => {
+    it('verifica si se puede crear un personaje correctamente', async () => {
+      const newCharacter: CreateCharacterDto = {
+        nombre: 'OttoMann',
+        edad: 32,
+        ocupacion: 'Conductor de autobús escolar',
+        caracteristicas: [
+          'Amante del heavy metal',
+          'Relajado',
+          'Despreocupado',
+        ],
+        familia: ['no posee'],
+      };
+
+      const createdCharacter = await service.createCharacter(newCharacter);
+      expect(createdCharacter.Character.nombre).toEqual(newCharacter.nombre);
+      expect(createdCharacter.Character.edad).toEqual(newCharacter.edad);
+    });
+  });
+
+  describe('updateCharacter', () => {
+    it('verifica si se puede actualizar un personaje existente', async () => {
+      const id = '7e6d5c4b-3a2f-4b0d-9c8e-7f6e5d4c3b2a';
+      const updatedCharacter: UpdateCharacterDto = {
+        "nombre": "Ralph wiggum",
         "edad": 8,
-        "ocupacion": "Estudiante",
+        "ocupacion": "Estudiante de primer año",
         "caracteristicas": [
           "Ingenuo",
           "Tonto",
@@ -69,123 +103,78 @@ describe('CharactersService', () => {
         ]
       };
 
-      const spy = jest.spyOn(characterService, 'getOneCharacter').mockResolvedValue(result);
-
-      const response = await characterService.getOneCharacter(id);
-
-      expect(response).toEqual(result);
-      expect(spy).toHaveBeenCalledWith(id);
+      const updated = await service.updateCharacter(id, updatedCharacter);
+      expect(updated.nombre).toEqual(updatedCharacter.nombre);
+      expect(updated.edad).toEqual(updatedCharacter.edad);
     });
 
-    it('lanzar NotFoundException si el personaje no existe', async () => {
-      const invalidId = "invalid-id";
-
-      jest.spyOn(characterService, 'getOneCharacter').mockRejectedValue(new NotFoundException());
-
-      await expect(characterService.getOneCharacter(invalidId)).rejects.toThrow(NotFoundException);
-    });
-  });
-
-  describe('getCharacterByName', () => {
-    it('retornar personajes por nombre', async () => {
-      const name = "moe";
-      const result: ICharacters[] = [{
-        "id": "8d7f9b4a-3c2e-5f6a-7b8d-9e0f1a2b3c4d",
-        "nombre": "Moe Szyslak",
-        "edad": 48,
-        "ocupacion": "Dueño de la Taberna de Moe",
+    it('verifica si lanza una excepcion NotFoundException cuando el personaje no existe', async () => {
+      const id = '7e6d5c4b-3a2f-4b0d-9c8e-7f6e5d4c3b2b';
+      const updateCharacterDto: UpdateCharacterDto = {
+        "nombre": "Ralph wiggum",
+        "edad": 8,
+        "ocupacion": "Estudiante de primer año",
         "caracteristicas": [
-          "Amargado",
-          "Cínico",
-          "Amigo de Homer",
-          "Barman",
-          "Solitario",
-          "Desesperado por amor",
-          "Con humor negro",
-          "Leal a sus amigos"
-        ],
-        "familia": []
-      }];
-
-      const spy = jest.spyOn(characterService, 'getCharacterByName').mockResolvedValue(result);
-
-      const response = await characterService.getCharacterByName(name);
-
-      expect(response).toEqual(result);
-      expect(spy).toHaveBeenCalledWith(name);
-    });
-  });
-
-  describe('createCharacter', () => {
-    it('agregar un personaje', async () => {
-      const newCharacter: any = {
-        "nombre": "OttoMann",
-        "edad": 32,
-        "ocupacion": "Conductor de autobús escolar",
-        "caracteristicas": [
-          "Amante del heavy metal",
-          "Relajado",
-          "Despreocupado",
-          "Fuma y bebe ocasionalmente",
-          "Vestimenta descuidada",
-          "Experto en guitarras",
-          "A veces irresponsable",
-          "Buen corazón"
-        ],
-        "familia": ["no posee"]
-      };
-
-      const spy = jest.spyOn(characterService, 'createCharacter').mockResolvedValue(newCharacter);
-
-      const response = await characterService.createCharacter(newCharacter);
-
-      expect(response).toEqual(newCharacter);
-      expect(spy).toHaveBeenCalledWith(newCharacter);
-    });
-  });
-
-  describe('updateCharacter', () => {
-    it('actualizar un personaje', async () => {
-      const id = "5f4e3d2c-1b0a-9c8d-7e6f-5g4h3i2j1k0l";
-      const updatedCharacter: ICharacters = {
-        "id": id,
-        "nombre": "Paul Skinner",
-        "edad": 44,
-        "ocupacion": "Director de la escuela primaria de Springfield",
-        "caracteristicas": [
-          "Estricto",
-          "Respetuoso",
-          "Vive con su madre",
-          "Veterano de guerra",
-          "Apasionado por la educación",
-          "Sujeto a la autoridad de su madre",
-          "Leal",
-          "Comprometido"
+          "Ingenuo",
+          "Tonto",
+          "Hijo del jefe de policía",
+          "Simpático",
+          "Inocente",
+          "Desconcertante",
+          "Curioso",
+          "Divertido"
         ],
         "familia": [
-          "Agnes Skinner"
+          "Clancy Wiggum",
+          "Sarah Wiggum"
         ]
       };
 
-      const spy = jest.spyOn(characterService, 'updateCharacter').mockResolvedValue(updatedCharacter);
+      await expect(service.updateCharacter(id, updateCharacterDto)).rejects.toThrow(NotFoundException);
+    });
 
-      const response = await characterService.updateCharacter(id, updatedCharacter);
+    it('verifica si lanza uns excepcion BadRequestException si el id es invalido', async () => {
+      const id = '7e6d5c4b-3a2f-4b0d-9c8e-7f6e5d4c3b';
+      const updateCharacterDto: UpdateCharacterDto = {
+        "nombre": "Ralph wiggum",
+        "edad": 8,
+        "ocupacion": "Estudiante de primer año",
+        "caracteristicas": [
+          "Ingenuo",
+          "Tonto",
+          "Hijo del jefe de policía",
+          "Simpático",
+          "Inocente",
+          "Desconcertante",
+          "Curioso",
+          "Divertido"
+        ],
+        "familia": [
+          "Clancy Wiggum",
+          "Sarah Wiggum"
+        ]
+      };
 
-      expect(response).toEqual(updatedCharacter);
-      expect(spy).toHaveBeenCalledWith(id, updatedCharacter);
+      await expect(service.updateCharacter(id, updateCharacterDto)).rejects.toThrow(BadRequestException);
     });
   });
 
   describe('deleteCharacter', () => {
-    it('eliminar un personaje existente', async () => {
-      const id = "9a8b7c6d-5e4f-3d2c-1b0e-a9b8c7d6e5f4";
-
-      jest.spyOn(characterService, 'deleteCharacter').mockResolvedValue(`Personaje con id '${id}' eliminado exitosamente`);
-
-      const response = await characterService.deleteCharacter(id);
-
-      expect(response).toEqual(`Personaje con id '${id}' eliminado exitosamente`);
+    it('verifica si se puede eliminar un personaje existente', async () => {
+      const id = '9a8b7c6d-5e4f-3d2c-1b0e-a9b8c7d6e5f4';
+      const deletedMessage = await service.deleteCharacter(id);
+      expect(deletedMessage).toContain(id);
     });
 
+    it('verifica si lanza una excepcion NotFoundException cuando el personaje no existe', async () => {
+      const id = '9a8b7c6d-5e4f-3d2c-1b0e-a9b8c7d6e5f4';
+      await expect(service.deleteCharacter(id)).rejects.toThrow(NotFoundException);
+    });
+
+    it('verifica si lanza uns excepcion BadRequestException si el id es invalido', async () => {
+      const id = '9a8b7c6d-5e4f-3d2c-1b0e-a9b8c7d6e5f4mm';
+      await expect(service.deleteCharacter(id)).rejects.toThrow(BadRequestException);
     });
   });
+
+});

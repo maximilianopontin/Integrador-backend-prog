@@ -19,9 +19,11 @@ describe('CharactersController', () => {
     characterController = module.get<CharactersController>(CharactersController);
     characterService = module.get<CharactersService>(CharactersService);
   });
-  it('retornar arreglo de personajes', async () => {
+  
+  describe('getAllCharacters', () => {
+  it('deberia retornar arreglo de personajes', async () => {
     const result: ICharacters[] = [{
-      "id": "5d4c3b2a-1f0e-9b8d-7c6e-5f4g3h2i1j0k",
+      "id": "5d4c3b2a-1f0e-9b8d-7c6e-5f4e3d2c1b0a",
       "nombre": "Edna Krabappel",
       "edad": 40,
       "ocupacion": "Maestra de la escuela primaria de Springfield",
@@ -44,10 +46,10 @@ describe('CharactersController', () => {
 
     expect(response).toEqual(result);
   });
-
+  });
   describe('getOneCharacter', () => {
-    it('Retornar un personaje por su id', async () => {
-      const id = "7e6d5c4b-3a2f-1b0d-9c8e-7f6g5h4i3j2k";
+    it('deberia Retornar un personaje por su id', async () => {
+      const id = "7e6d5c4b-3a2f-4b0d-9c8e-7f6e5d4c3b2a";
       const result: ICharacters = {
         "id": id,
         "nombre": "Ralph Wiggum",
@@ -82,7 +84,7 @@ describe('CharactersController', () => {
   });
 
   describe('getCharacterByName', () => {
-    it('Retornnar personaje por su nombre', async () => {
+    it('deberia Retornnar personaje por su nombre', async () => {
       const result: ICharacters[] = [{
         "id": "8d7f9b4a-3c2e-5f6a-7b8d-9e0f1a2b3c4d",
         "nombre": "Moe Szyslak",
@@ -110,7 +112,7 @@ describe('CharactersController', () => {
   });
 
   describe('createCharacter', () => {
-    it('agregar personaje y poder buscarlo por nombre', async () => {
+    it('deberia agregar personaje y poder buscarlo por nombre', async () => {
 
       const newCharacter: any = {
         "nombre": "OttoMann",
@@ -139,30 +141,31 @@ describe('CharactersController', () => {
   });
 
   describe('updateCharacter', () => {
-    it('actualizar un personaje', async () => {
+    it('deberia actualizar un personaje', async () => {
       const updatedCharacter: ICharacters = {
-        "id": "5f4e3d2c-1b0a-9c8d-7e6f-5g4h3i2j1k0l",
-        "nombre": "Paul Skinner",
-        "edad": 44,
-        "ocupacion": "Director de la escuela primaria de Springfield",
+        "id": "7e6d5c4b-3a2f-4b0d-9c8e-7f6e5d4c3b2a",
+        "nombre": "Ralph wiggum",
+        "edad": 8,
+        "ocupacion": "Estudiante de primer año",
         "caracteristicas": [
-          "Estricto",
-          "Respetuoso",
-          "Vive con su madre",
-          "Veterano de guerra",
-          "Apasionado por la educación",
-          "Sujeto a la autoridad de su madre",
-          "Leal",
-          "Comprometido"
+          "Ingenuo",
+          "Tonto",
+          "Hijo del jefe de policía",
+          "Simpático",
+          "Inocente",
+          "Desconcertante",
+          "Curioso",
+          "Divertido"
         ],
         "familia": [
-          "Agnes Skinner"
+          "Clancy Wiggum",
+          "Sarah Wiggum"
         ]
       };
 
       jest.spyOn(characterService, 'updateCharacter').mockResolvedValue(updatedCharacter);
 
-      const response = await characterController.update('5f4e3d2c-1b0a-9c8d-7e6f-5g4h3i2j1k0l', updatedCharacter);
+      const response = await characterController.update('5f4e3d2c-1b0a-9c8d-7e6f-5d4c3b2a1f0e', updatedCharacter);
 
       expect(response).toEqual(updatedCharacter);
     });
@@ -172,23 +175,22 @@ describe('CharactersController', () => {
     it('eliminar un personaje existente', async () => {
       const deleteCharacter: ICharacters = {
         "id": "9a8b7c6d-5e4f-3d2c-1b0e-a9b8c7d6e5f4",
-        "nombre": "Apu Nahasapeemapetilon",
-        "edad": 45,
-        "ocupacion": "Dueño del Kwik-E-Mart",
-        "caracteristicas": [
-          "Trabajador",
-          "Educado",
-          "Padre de octillizos",
-          "Amigo de Homer",
-          "Culturalmente rico",
-          "A veces explotado",
-          "Estudioso",
-          "Buen negociante"
-        ],
-        "familia": [
-          "Manjula Nahasapeemapetilon",
-          "Octillizos Nahasapeemapetilon"
-        ]
+    "nombre": "Krusty el Payaso",
+    "edad": 52,
+    "ocupacion": "Payaso de televisión",
+    "caracteristicas": [
+      "Divertido",
+      "Desorganizado",
+      "Fumador",
+      "Amigo de Bart",
+      "Cínico",
+      "Propenso a vicios",
+      "Conduce un programa infantil",
+      "A veces triste"
+    ],
+    "familia": [
+      "Hyman Krustofski"
+    ]
       };
       // Simula el comportamiento del servicio deleteCharacter
       jest.spyOn(characterService, 'deleteCharacter').mockResolvedValue(`Personaje con id '${deleteCharacter.id}' eliminado exitosamente`)

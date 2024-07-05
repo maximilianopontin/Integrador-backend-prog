@@ -13,7 +13,7 @@ export class CharactersController {
 
   @Get() //maneja las solicitudes GET a la ruta /characters
   getAllCharacters(): Promise<ICharacters[]> {
-    // El método devuelve una promesa de un array de personajes.s
+    // El método devuelve una promesa de un array de personajes.
     return this.charactersService.getAllCharacters();
   }
 
@@ -29,6 +29,7 @@ export class CharactersController {
   //http://localhost:3000/characters/search/name?name=simpson
   @Get('search/name')
   findByName(@Query('name') name: string): Promise<ICharacters[]> {
+    //Obtiene el valor del parámetro de consulta name.
     return this.charactersService.getCharacterByName(name);
   }
 
@@ -44,7 +45,7 @@ export class CharactersController {
   }
 
   @Delete(':id')//solicitudes DELETE en la ruta /characters/:id.
-  remove(@Param('id') id: string) : Promise <string> { //decorador @Param('id') para obtener el valor del parámetro de la URL, que corresponde al id del personaje a eliminar.
+  remove(@Param('id') id: string) : Promise <string> { //decorador @Param para obtener el valor del parámetro de la URL, que corresponde al id del personaje a eliminar.
     return this.charactersService.deleteCharacter(id);
   }
 }

@@ -1,20 +1,20 @@
-import { Injectable, NotFoundException,BadRequestException  } from '@nestjs/common';
+import { Injectable, NotFoundException, BadRequestException } from '@nestjs/common';
 import { readFile, writeFile } from 'fs/promises';
 import { join } from 'path';
 import { CreateCharacterDto } from './dto/create-character.dto';
 import { UpdateCharacterDto } from './dto/update-character.dto';
 import { ICharacters } from './interface/interface.characters';
-import { v4 as uuidv4, validate as uuidValidate  } from 'uuid';
+import { v4 as uuidv4, validate as uuidValidate } from 'uuid';
 
 
 @Injectable()
 export class CharactersService {
-  private filePath: string;// Define una propiedad filePath para almacenar la ruta del archivo JSON.
+  private filePath: string;// propiedad filePath para almacenar la ruta del archivo JSON.
 
   constructor() {
     this.filePath = join(__dirname, '..', '..', 'src', 'model', 'characters.json');// Inicializa filePath con la ruta al archivo characters.json.
   }
-  //carga los datos del archivo JSON.
+  // Lee y retorna los datos del archivo JSON. Si hay un error, lanza una excepción.
   private async loadData(): Promise<ICharacters[]> {
     try {
       const data = await readFile(this.filePath, 'utf-8');/// Lee el archivo JSON.
@@ -33,7 +33,7 @@ export class CharactersService {
     return this.loadData();// retorna lista completa de personajes almacenadas en la propiedad characters.
   }
 
-  // Método público que devuelve un personaje por su ID.
+  // Método que devuelve un personaje por su ID.
   async getOneCharacter(id: string): Promise<ICharacters> {
     try {
       const data = await this.loadData(); // Carga los datos del archivo JSON.
@@ -49,13 +49,12 @@ export class CharactersService {
   //metodo para busqueda de personaje por nombre
   async getCharacterByName(name: string): Promise<ICharacters[]> {
     const data = await this.loadData();
-    const normalizedName = name.trim().toLowerCase(); // Elimina espacios en blanco al principio y al final del nombre buscado
-    const characters = data.filter((character) =>  //filtra los personajes basados en la condición proporcionada dentro de la función de filtro.
+    const normalizedName = name.trim().toLowerCase(); // Elimina espacios en blanco al principio y al final del nombre buscado y convierte a miniscula
+    const characters = data.filter((character) =>
+      //filtra los personajes comparando el nombre del personaje (después de quitar los espacios en blanco al inicio y fin) con el nombre buscado (después de convertir ambos a minúsculas para ignorar diferencias de mayúsculas/minúsculas).
       character.nombre.trim().toLowerCase().includes(normalizedName)
-      //realiza la comparación del nombre del personaje (después de quitar los espacios en blanco al inicio y fin) con el nombre buscado (después de convertir ambos a minúsculas para ignorar diferencias de mayúsculas/minúsculas).
-      //devuelve los personajes que coinciden
+      //
     );
-    //Filtra los personajes cuyo nombre incluye la cadena de búsqueda name, sin tener en cuenta mayúsculas y minúsculas.
     if (characters.length === 0) {// Si no se encontraron personajes, lanza una excepción
       throw new NotFoundException(`No se encontraron personajes con nombre:'${name}'`);
     }
