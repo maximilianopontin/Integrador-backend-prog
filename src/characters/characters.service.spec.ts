@@ -13,7 +13,7 @@ describe('CharactersService', () => {
       providers: [CharactersService],
     }).compile();
 
-    service = module.get<CharactersService>(CharactersService);
+    service = module.get<CharactersService>(CharactersService); //Obtenemos una instancia del servicio
   });
 
   //pruebas de funcionalidad:
@@ -23,7 +23,7 @@ describe('CharactersService', () => {
     expect(service).toBeDefined();
   });
 
-  describe('getAllCharacters', () => {
+  describe('getAllCharacters', () => {//agrupa pruebas del metodo
     it('verifica si devuelve un arreglo de personajes', async () => {
       const characters = await service.getAllCharacters();//llama a la funcion y guarda el resultado en characters
       expect(characters).toBeInstanceOf(Array);//Utiliza expect para verificar que characters sea una instancia de Array.
@@ -40,7 +40,7 @@ describe('CharactersService', () => {
     it('verifica si lanza una excepcion NotFoundException cuando el id no existe', async () => {
       const id = '7e6d5c4b-3a2f-4b0d-9c8e-7f6e5d4c3b2l';//id no existe
       await expect(service.getOneCharacter(id)).rejects.toThrow(NotFoundException);
-      //Utiliza expect para verificar que cuando llame a getOneCharacter con id lanza una excepción NotFoundException.
+      //Utiliza expect para verificar que cuando llame a getOneCharacter con id inexistente lanza una excepción NotFoundException.
     });
   });
 
@@ -49,7 +49,7 @@ describe('CharactersService', () => {
       const name = 'moe';
       const characters = await service.getCharacterByName(name);
       expect(characters).toBeInstanceOf(Array);
-      expect(characters.length).toBeGreaterThan(0);
+      expect(characters.length).toBeGreaterThan(0);//Verifica que el array de personajes no esté vacío.
       // Utiliza expect para asegurar que characters tenga una longitud mayor que 0.
     });
 
@@ -75,7 +75,9 @@ describe('CharactersService', () => {
       };
 
       const createdCharacter = await service.createCharacter(newCharacter);
+      // Llama al método createCharacter con el DTO del nuevo personaje.
       expect(createdCharacter.Character.nombre).toEqual(newCharacter.nombre);
+      //Verifica que el nombre del personaje creado coincida con el nombre proporcionado.
       expect(createdCharacter.Character.edad).toEqual(newCharacter.edad);
     });
   });
@@ -105,6 +107,7 @@ describe('CharactersService', () => {
 
       const updated = await service.updateCharacter(id, updatedCharacter);
       expect(updated.nombre).toEqual(updatedCharacter.nombre);
+      // Asegura que el nombre del personaje actualizado coincida con el nombre proporcionado.
       expect(updated.edad).toEqual(updatedCharacter.edad);
     });
 
@@ -161,13 +164,14 @@ describe('CharactersService', () => {
 
   describe('deleteCharacter', () => {
     it('verifica si se puede eliminar un personaje existente', async () => {
-      const id = '9a8b7c6d-5e4f-3d2c-1b0e-a9b8c7d6e5f4';
+      const id = '6e5d4c3b-2a1f-9b0d-8c7e-5d4c3b2a1f0e';
       const deletedMessage = await service.deleteCharacter(id);
       expect(deletedMessage).toContain(id);
+      //Asegura que el mensaje de eliminación contenga el ID del personaje eliminado.
     });
 
     it('verifica si lanza una excepcion NotFoundException cuando el personaje no existe', async () => {
-      const id = '9a8b7c6d-5e4f-3d2c-1b0e-a9b8c7d6e5f4';
+      const id = '0813731a-cff3-468d-a274-15d9b85b40ba';
       await expect(service.deleteCharacter(id)).rejects.toThrow(NotFoundException);
     });
 

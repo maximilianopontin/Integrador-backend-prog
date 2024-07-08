@@ -14,13 +14,13 @@ export class CharactersController {
   @Get() //maneja las solicitudes GET a la ruta /characters
   getAllCharacters(): Promise<ICharacters[]> {
     // El método devuelve una promesa de un array de personajes.
-    return this.charactersService.getAllCharacters();
+    return this.charactersService.getAllCharacters();//retorna metodo del servicio
   }
 
   @Get(':id')// maneja solicitudes GET a la ruta /characters/:id. 
   @UsePipes(new ValidationPipe({ transform: true }))// valida y transforma automáticamente los datos de entrada basados en reglas definidas en IdParamDto
    getOneCharacter(@Param()params:IdParamDto): Promise<ICharacters> {
-    //Utiliza el decorador @Param('id') para obtener el valor del parámetro de la URL
+    //Utiliza el decorador @Param('id') para obtener el valor del parámetro de la URL(ID)
     //el objeto params debe coincidir con la estructura definida en IdParamDto
     return this.charactersService.getOneCharacter(params.id);
     // llama al método del servicio para buscar un personaje por su ID y devolverlo.
@@ -35,7 +35,7 @@ export class CharactersController {
 
   @Post()// Maneja las solicitudes POST a la ruta /characters.
   create(@Body() newCharacter: CreateCharacterDto) {
-    // Utiliza el decorador @Body() para obtener los datos del cuerpo de la solicitud.
+    // Utiliza el decorador @Body() para obtener los datos del cuerpo de la solicitud, sin el id.
     return this.charactersService.createCharacter(newCharacter);
     // Llama al método del servicio para crear un nuevo personaje.
   }

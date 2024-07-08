@@ -12,7 +12,7 @@ export class CharactersService {
   private filePath: string;// propiedad filePath para almacenar la ruta del archivo JSON.
 
   constructor() {
-    this.filePath = join(__dirname, '..', '..', 'src', 'model', 'characters.json');// Inicializa filePath con la ruta al archivo characters.json.
+    this.filePath = join(__dirname, '..', '..', 'src', 'model', 'characters.json');// usamos join para Inicializar filePath con la ruta al archivo characters.json.
   }
   // Lee y retorna los datos del archivo JSON. Si hay un error, lanza una excepción.
   private async loadData(): Promise<ICharacters[]> {
@@ -26,10 +26,10 @@ export class CharactersService {
   //guarda los datos en el archivo JSON.
   private async saveData(data: ICharacters[]): Promise<void> {
     await writeFile(this.filePath, JSON.stringify(data, null, 2), 'utf-8');
-  } //// Escribe el array de objetos ICharacters en el archivo JSON.
+  } //// Escribe el array de objetos javascript ICharacters en archivo json
 
-
-  async getAllCharacters(): Promise<ICharacters[]> {//método devuelve una promesa de un array de personajes
+//método devuelve una promesa de un array de personajes
+  async getAllCharacters(): Promise<ICharacters[]> {
     return this.loadData();// retorna lista completa de personajes almacenadas en la propiedad characters.
   }
 
@@ -39,12 +39,13 @@ export class CharactersService {
       const data = await this.loadData(); // Carga los datos del archivo JSON.
       const character = data.find((character) => character.id === id);// Busca el personaje que coincide con el ID.
       // devuelve el resultado en una constante character
-      if (Object.keys(character).length)
-        return character;
-    } catch (error) { //Si no se encuentra, lanza una excepción
+      if (!character) {
+        throw new NotFoundException(`Personaje con id '${id}' no existe`);
+      }
+      return character;
+    } catch (error) {
       throw new NotFoundException(`Personaje con id '${id}' no existe`);
     }
-
   }
   //metodo para busqueda de personaje por nombre
   async getCharacterByName(name: string): Promise<ICharacters[]> {
@@ -77,14 +78,17 @@ export class CharactersService {
     }
     const data = await this.loadData();
     const index = data.findIndex((character) => character.id === id);// Busca el índice del personaje en el array cuyo id coincide con el id proporcionado como parámetro.
-    // Utiliza el método findIndex para encontrar la primera coincidencia y devuelve el índice correspondiente.
+    //Utiliza el método findIndex para encontrar la primera coincidencia y devuelve el índice correspondiente.
     if (index === -1) {// si no se encontró ningún personaje con el id dado.
       throw new NotFoundException(`Personaje con id '${id}' no existe`);
     }
-    data[index] = { ...data[index], ...updateCharacterDto };// Actualiza el personaje encontrado combinando sus datos actuales (data[index]) con los nuevos datos proporcionados en updateCharacterDto.
+    const updatedCharacter = { ...data[index], ...updateCharacterDto };
+    //Actualiza el personaje encontrado combinando sus datos actuales (data[index]) con los nuevos datos proporcionados en updateCharacterDto.
     // Utiliza el operador de propagación (...) para copiar las propiedades del objeto existente y del DTO de actualización, sobreescribiendo las propiedades existentes con las nuevas si están presentes.
+    data[index] = updatedCharacter;
     await this.saveData(data);
-    return data[index];//Devuelve el objeto del personaje actualizado.
+    return updatedCharacter;
+ 
   }
   async deleteCharacter(id: string): Promise<string> {
     if (!uuidValidate(id)) {
