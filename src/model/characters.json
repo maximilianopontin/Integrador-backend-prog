@@ -1,24 +1,19 @@
 [
   {
-    "id": "d71f23a0-7c4d-4d6d-93f5-64733d1c3e4a",
+    "id": "3c8e8b2a-1f44-4c9e-8d5b-25c70e73014b",
     "nombre": "Homer Simpson",
     "edad": 39,
-    "ocupacion": "Inspector de seguridad en la planta nuclear de Springfield",
+    "ocupacion": "Inspector de seguridad en la Planta Nuclear de Springfield",
     "caracteristicas": [
       "Perezoso",
-      "Gordo",
       "Amante de las rosquillas",
-      "Padre de tres hijos",
-      "Irritable",
-      "Buen corazón",
-      "Despreocupado",
-      "Fanático de la cerveza Duff"
+      "Padre cariñoso"
     ],
     "familia": [
       "Marge Simpson",
-      "Bart Simpson",
-      "Lisa Simpson",
-      "Maggie Simpson"
+      "Bart",
+      "Lisa",
+      "Maggie"
     ]
   },
   {
@@ -247,7 +242,7 @@
     "id": "7e6d5c4b-3a2f-4b0d-9c8e-7f6e5d4c3b2a",
     "nombre": "Ralph wiggum",
     "edad": 8,
-    "ocupacion": "Estudiante",
+    "ocupacion": "Estudiante de primer año",
     "caracteristicas": [
       "Ingenuo",
       "Tonto",

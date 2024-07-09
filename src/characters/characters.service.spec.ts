@@ -164,7 +164,7 @@ describe('CharactersService', () => {
 
   describe('deleteCharacter', () => {
     it('verifica si se puede eliminar un personaje existente', async () => {
-      const id = '6e5d4c3b-2a1f-9b0d-8c7e-5d4c3b2a1f0e';
+      const id = '3c8e8b2a-1f44-4c9e-8d5b-25c70e73014b';
       const deletedMessage = await service.deleteCharacter(id);
       expect(deletedMessage).toContain(id);
       //Asegura que el mensaje de eliminación contenga el ID del personaje eliminado.
