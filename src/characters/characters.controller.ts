@@ -8,7 +8,8 @@ import { IdParamDto } from './dto/id-paramdto';
 
 @Controller('characters')// todas las rutas definidas en este controlador estarán precedidas por /characters
 export class CharactersController {
-  constructor(private readonly charactersService: CharactersService) { } // Inyecta el servicio CharactersService en el controlador.
+  constructor(private readonly charactersService: CharactersService) { } 
+  // Inyecta el servicio CharactersService en el controlador.
 
 
   @Get() //maneja las solicitudes GET a la ruta /characters
@@ -17,6 +18,12 @@ export class CharactersController {
     return this.charactersService.getAllCharacters();//retorna metodo del servicio
   }
 
+  //http://localhost:3000/characters/search?name=simpson
+  @Get('search/')
+  findByName(@Query('name') name: string): Promise<ICharacters[]> {
+    //Obtiene el valor del parámetro de consulta name.
+    return this.charactersService.getCharacterByName(name);
+  }
   @Get(':id')// maneja solicitudes GET a la ruta /characters/:id. 
   @UsePipes(new ValidationPipe({ transform: true }))// valida y transforma automáticamente los datos de entrada basados en reglas definidas en IdParamDto
    getOneCharacter(@Param()params:IdParamDto): Promise<ICharacters> {
@@ -24,13 +31,6 @@ export class CharactersController {
     //el objeto params debe coincidir con la estructura definida en IdParamDto
     return this.charactersService.getOneCharacter(params.id);
     // llama al método del servicio para buscar un personaje por su ID y devolverlo.
-  }
-
-  //http://localhost:3000/characters/search/name?name=simpson
-  @Get('search/name')
-  findByName(@Query('name') name: string): Promise<ICharacters[]> {
-    //Obtiene el valor del parámetro de consulta name.
-    return this.charactersService.getCharacterByName(name);
   }
 
   @Post()// Maneja las solicitudes POST a la ruta /characters.

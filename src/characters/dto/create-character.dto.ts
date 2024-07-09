@@ -1,6 +1,6 @@
 // create-character.dto.ts
 
-import { IsString, IsNumber, IsArray, ArrayNotEmpty,Min } from 'class-validator';
+import { IsString, IsNumber, IsArray, ArrayNotEmpty,Min, Max,IsNotEmpty } from 'class-validator';
 
 
 interface CharacterEntity {
@@ -13,14 +13,18 @@ interface CharacterEntity {
 
 export class CreateCharacterDto implements CharacterEntity {
   @IsString()
-  nombre: string;
+  @IsNotEmpty()
+ nombre: string;
 
   @IsNumber()
   @Min(1)
-  edad: number;
+  @Max(100)
+  @IsNotEmpty()
+ edad: number;
 
   @IsString()
-  ocupacion: string;
+  @IsNotEmpty()
+ ocupacion: string;
 
   @IsArray()
   @ArrayNotEmpty()//arreglo no esté vacío
@@ -30,7 +34,7 @@ export class CreateCharacterDto implements CharacterEntity {
   @IsArray()
   @ArrayNotEmpty()
   @IsString({ each: true })
-  familia: string[];
+ familia: string[];
 
   // Restringe cualquier otra clave en el DTO que no esté en la interfaz CharacterEntity
   [key: string]: any;

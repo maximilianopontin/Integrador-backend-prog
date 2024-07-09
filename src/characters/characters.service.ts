@@ -12,13 +12,14 @@ export class CharactersService {
   private filePath: string;// propiedad filePath para almacenar la ruta del archivo JSON.
 
   constructor() {
-    this.filePath = join(__dirname, '..', '..', 'src', 'model', 'characters.json');// usamos join para Inicializar filePath con la ruta al archivo characters.json.
+    this.filePath = join(__dirname, '..', '..', 'src', 'model', 'characters.json');
+    // usamos join para Inicializar filePath con la ruta al archivo characters.json.
   }
   // Lee y retorna los datos del archivo JSON. Si hay un error, lanza una excepción.
   private async loadData(): Promise<ICharacters[]> {
     try {
       const data = await readFile(this.filePath, 'utf-8');/// Lee el archivo JSON.
-      return JSON.parse(data);// Convierte el contenido del archivo JSON a un array de objetos ICharacters.
+      return JSON.parse(data);// Convierte el cadena de texto JSON en un array de objetos ICharacters.
     } catch (error) {
       throw new Error('Error al leer el archivo de datos');
     }
@@ -26,9 +27,9 @@ export class CharactersService {
   //guarda los datos en el archivo JSON.
   private async saveData(data: ICharacters[]): Promise<void> {
     await writeFile(this.filePath, JSON.stringify(data, null, 2), 'utf-8');
-  } //// Escribe el array de objetos javascript ICharacters en archivo json
+  } //// convierte el array de objetos javascript ICharacters en cadena de texto json
 
-//método devuelve una promesa de un array de personajes
+  //método devuelve una promesa de un array de personajes
   async getAllCharacters(): Promise<ICharacters[]> {
     return this.loadData();// retorna lista completa de personajes almacenadas en la propiedad characters.
   }
@@ -44,7 +45,7 @@ export class CharactersService {
       }
       return character;
     } catch (error) {
-      throw new NotFoundException(`Personaje con id '${id}' no existe`);
+      throw new NotFoundException(`error al cargar el personje con id'${id}'`);
     }
   }
   //metodo para busqueda de personaje por nombre
@@ -88,7 +89,7 @@ export class CharactersService {
     data[index] = updatedCharacter;
     await this.saveData(data);
     return updatedCharacter;
- 
+
   }
   async deleteCharacter(id: string): Promise<string> {
     if (!uuidValidate(id)) {
