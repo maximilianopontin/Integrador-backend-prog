@@ -12,6 +12,7 @@ describe('CharactersController', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
+      //crea un módulo de prueba que incluye CharactersController y CharactersService, refleja el entorno de ejecución real pero en un contexto controlado.
       controllers: [CharactersController],
       providers: [CharactersService],
     }).compile();
@@ -22,7 +23,7 @@ describe('CharactersController', () => {
 
   describe('getAllCharacters', () => {
     it('deberia retornar arreglo de personajes', async () => {
-      const result: ICharacters[] = [{
+      const result: ICharacters[] = [{ 
         "id": "5d4c3b2a-1f0e-9b8d-7c6e-5f4e3d2c1b0a",
         "nombre": "Edna Krabappel",
         "edad": 40,
@@ -41,12 +42,13 @@ describe('CharactersController', () => {
       }];
 
       jest.spyOn(characterService, 'getAllCharacters').mockResolvedValue(result);
-      // Simula la implementación del método getAllCharacters del servicio para que retorne un resultado predefinido.
+      // Simula la respuesta del servicio (getAllCharacters) 
+      // mockResolvedValue, verifica que el controlador devuelve la misma respuesta esperada.
 
       const response = await characterController.getAllCharacters();
-
+      // Llama al método del servicio
       expect(response).toEqual(result);
-      //Verifica que la respuesta del controlador sea igual al resultado esperado.
+      //Verifica que la respuesta del controlador sea igual al resultado esperado por el mock
     });
   });
 
@@ -73,9 +75,8 @@ describe('CharactersController', () => {
           "Sarah Wiggum"
         ]
       };
-      // Simula que el servicio devuelve el personaje con el ID válido
+      //Simula la respuesta del servicio (getOneCharacter) con un ID válido, 
       jest.spyOn(characterService, 'getOneCharacter').mockResolvedValue(result);
-
       // Crea una instancia del DTO con el ID válido
       const paramsDto = new IdParamDto();
       paramsDto.id = id;
@@ -107,7 +108,8 @@ describe('CharactersController', () => {
       }];
 
       jest.spyOn(characterService, 'getCharacterByName').mockResolvedValue(result);
-      //Simula la implementación del método getCharacterByName del servicio para que retorne un resultado predefinido (name)
+      // Simula la respuesta del servicio (getCharacterByName) para un nombre específico y 
+      // verifica que el controlador devuelva el resultado esperado.
       const response = await characterController.findByName("moe");
 
       expect(response).toEqual(result);
@@ -135,7 +137,8 @@ describe('CharactersController', () => {
       };
 
       jest.spyOn(characterService, 'createCharacter').mockResolvedValue(newCharacter);
-      //Simula la implementación del método createCharacter del servicio para que retorne el personaje creado.
+      //Simula la respuesta del servicio (createCharacter) al crear un nuevo personaje y 
+      //verifica que el controlador devuelva el personaje creado correctamente.
       const response = await characterController.create(newCharacter);
       expect(response).toEqual(newCharacter);
     });
@@ -165,7 +168,8 @@ describe('CharactersController', () => {
       };
 
       jest.spyOn(characterService, 'updateCharacter').mockResolvedValue(updatedCharacter);
-      //Simula la implementación del método updateCharacter del servicio para que retorne el personaje actualizado.
+      //Simula la respuesta del servicio (updateCharacter) al actualizar un personaje existente y 
+      //verifica que el controlador devuelva el personaje actualizado correctamente.
       const response = await characterController.update('5f4e3d2c-1b0a-9c8d-7e6f-5d4c3b2a1f0e', updatedCharacter);
       expect(response).toEqual(updatedCharacter);
     });
@@ -194,7 +198,8 @@ describe('CharactersController', () => {
       };
 
       jest.spyOn(characterService, 'deleteCharacter').mockResolvedValue(`Personaje con id '${deleteCharacter.id}' eliminado exitosamente`)
-      //Simula la implementación del método deleteCharacter del servicio para que retorne un mensaje de éxito.
+      //Simula la respuesta del servicio (deleteCharacter) al eliminar un personaje y 
+      //verifica que el controlador devuelva el mensaje de éxito esperado.
 
       const response = await characterController.remove(deleteCharacter.id);
       // Llama al método remove del controlador con el ID del personaje a eliminar
@@ -209,3 +214,6 @@ describe('CharactersController', () => {
   });
 
 });
+//en el controlador, las pruebas se enfocan en cómo el controlador interactúa con el servicio y maneja las respuestas de manera adecuada para las peticiones HTTP.
+//simulamos el comportamiento del servicio para enfocarnos en las interacciones HTTP y las respuestas del controlador.
+

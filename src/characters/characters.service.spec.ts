@@ -8,8 +8,8 @@ describe('CharactersService', () => {
   let service: CharactersService;//declara variable para almacenar servicio
 
   //se ejecuta antes de cada prueba
-  beforeEach(async () => {//creacion modulo de prueba
-    const module: TestingModule = await Test.createTestingModule({
+  beforeEach(async () => {
+    const module: TestingModule = await Test.createTestingModule({//creacion modulo de prueba, solo incluye service, permite probarlo de manera independiente
       providers: [CharactersService],
     }).compile();
 
@@ -187,3 +187,5 @@ describe('CharactersService', () => {
   });
 
 });
+//En el servicio, las pruebas se centran en la funcionalidad real de los métodos implementados
+//validar la lógica interna de los métodos del servicio que interactúan con los datos y aplican la lógica de negocio.s
