@@ -63,15 +63,20 @@ describe('CharactersService', () => {
   describe('createCharacter', () => {
     it('verifica si se puede crear un personaje correctamente', async () => {
       const newCharacter: CreateCharacterDto = {
-        nombre: 'OttoMann',
-        edad: 32,
-        ocupacion: 'Conductor de autobús escolar',
-        caracteristicas: [
-          'Amante del heavy metal',
-          'Relajado',
-          'Despreocupado',
+        "nombre": "OttoMann",
+        "edad": 32,
+        "ocupacion": "Conductor de autobús escolar",
+        "caracteristicas": [
+          "Amante del heavy metal",
+          "Relajado",
+          "Despreocupado",
+          "Fuma y bebe ocasionalmente",
+          "Vestimenta descuidada",
+          "Experto en guitarras",
+          "A veces irresponsable",
+          "Buen corazón"
         ],
-        familia: ['no posee'],
+        "familia": ["no posee"]
       };
 
       const createdCharacter = await service.createCharacter(newCharacter);
@@ -164,7 +169,7 @@ describe('CharactersService', () => {
 
   describe('deleteCharacter', () => {
     it('verifica si se puede eliminar un personaje existente', async () => {
-      const id = '3c8e8b2a-1f44-4c9e-8d5b-25c70e73014b';
+      const id = '7e6d5c4b-3a2f-4b0d-9c8e-7f6e5d4c3b2a';//elimino a ralph
       const deletedMessage = await service.deleteCharacter(id);
       expect(deletedMessage).toContain(id);
       //Asegura que el mensaje de eliminación contenga el ID del personaje eliminado.

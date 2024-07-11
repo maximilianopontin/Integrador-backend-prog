@@ -1,63 +1,88 @@
 [
   {
-    "id": "3c8e8b2a-1f44-4c9e-8d5b-25c70e73014b",
-    "nombre": "Homer Simpson",
+    "id": "d5a3d4f1-0e9a-4e8c-8b57-6c3b2f0e7a91",
+    "nombre": "Homero Simpson",
     "edad": 39,
-    "ocupacion": "Inspector de seguridad en la Planta Nuclear de Springfield",
+    "ocupacion": "Inspector de seguridad en la planta nuclear de Springfield",
     "caracteristicas": [
       "Perezoso",
-      "Amante de las rosquillas",
-      "Padre cariñoso"
+      "Amante de la cerveza",
+      "Torpe",
+      "Cariñoso",
+      "Glotón",
+      "Amante de la TV",
+      "Mal consejero",
+      "Torpe"
     ],
     "familia": [
       "Marge Simpson",
-      "Bart",
-      "Lisa",
-      "Maggie"
-    ]
-  },
-  {
-    "id": "b44a58c7-0b7b-4f18-8a8b-1d6d24421b3c",
-    "nombre": "rosa",
-    "edad": 36,
-    "ocupacion": "Ama de casa",
-    "caracteristicas": [
-      "Cabello azul alto",
-      "Paciente",
-      "Cuidadosa",
-      "Madre de tres hijos",
-      "Moralista",
-      "Buena cocinera",
-      "Hábil en el bricolaje",
-      "Amante del arte"
-    ],
-    "familia": [
-      "Homer Simpson",
       "Bart Simpson",
       "Lisa Simpson",
       "Maggie Simpson"
     ]
   },
   {
-    "id": "3c8e8b2a-1f44-4c9e-8d5b-25c70e73014b",
+    "id": "a6f9d4c7-1e2b-4f4b-8c57-6b4b3f5e2b8c",
     "nombre": "Bart Simpson",
     "edad": 10,
     "ocupacion": "Estudiante",
     "caracteristicas": [
       "Travieso",
-      "Skater",
       "Rebelde",
-      "Problemas con la autoridad",
-      "Sarcasmo",
+      "Skater",
+      "Payaso de la clase",
+      "Mal estudiante",
       "Creativo",
-      "Amante de las bromas",
-      "Jugador de videojuegos"
+      "Inmaduro",
+      "Amante de los videojuegos"
     ],
     "familia": [
-      "Homer Simpson",
+      "Homero Simpson",
       "Marge Simpson",
       "Lisa Simpson",
       "Maggie Simpson"
+    ]
+  },
+  {
+    "id": "b3e4f8d2-6c7a-4f7c-8b67-5c4d3f9e1b7a",
+    "nombre": "Marge Simpson",
+    "edad": 36,
+    "ocupacion": "Ama de casa",
+    "caracteristicas": [
+      "Paciencia",
+      "Comprensiva",
+      "Responsable",
+      "Cocinera",
+      "Ama de casa dedicada",
+      "Amante del arte",
+      "Sensible",
+      "Protectora"
+    ],
+    "familia": [
+      "Homero Simpson",
+      "Bart Simpson",
+      "Lisa Simpson",
+      "Maggie Simpson"
+    ]
+  },
+  {
+    "id": "c7d3e6f1-0e9d-4f7c-8b67-6c5d2f4e3a8b",
+    "nombre": "Maggie Simpson",
+    "edad": 1,
+    "ocupacion": "Bebé",
+    "caracteristicas": [
+      "Silenciosa",
+      "Observadora",
+      "Tierna",
+      "Aventurera",
+      "Listilla para su edad",
+      "Misteriosa"
+    ],
+    "familia": [
+      "Homero Simpson",
+      "Marge Simpson",
+      "Bart Simpson",
+      "Lisa Simpson"
     ]
   },
   {
@@ -83,25 +108,23 @@
     ]
   },
   {
-    "id": "ea159c37-8ab6-4b3c-8c4f-fc24b2b94891",
-    "nombre": "Maggie Simpson",
-    "edad": 1,
-    "ocupacion": "Bebé",
+    "id": "7e6d5c4b-3a2f-4b0d-9c8e-7f6e5d4c3b2a ",
+    "nombre": "Ralph wiggum",
+    "edad": 8,
+    "ocupacion": "Estudiante",
     "caracteristicas": [
-      "Chupa chupete",
-      "Silenciosa",
-      "Observadora",
+      "Ingenuo",
+      "Tonto",
+      "Hijo del jefe de policía",
+      "Simpático",
       "Inocente",
-      "Hábil con el tirachinas",
-      "Dependiente de su chupete",
-      "Tierna",
-      "Intuitiva"
+      "Desconcertante",
+      "Curioso",
+      "Divertido"
     ],
     "familia": [
-      "Homer Simpson",
-      "Marge Simpson",
-      "Bart Simpson",
-      "Lisa Simpson"
+      "Clancy Wiggum",
+      "Sarah Wiggum"
     ]
   },
   {
@@ -237,26 +260,6 @@
       "Leal a sus amigos"
     ],
     "familia": []
-  },
-  {
-    "id": "7e6d5c4b-3a2f-4b0d-9c8e-7f6e5d4c3b2a",
-    "nombre": "Ralph wiggum",
-    "edad": 8,
-    "ocupacion": "Estudiante de primer año",
-    "caracteristicas": [
-      "Ingenuo",
-      "Tonto",
-      "Hijo del jefe de policía",
-      "Simpático",
-      "Inocente",
-      "Desconcertante",
-      "Curioso",
-      "Divertido"
-    ],
-    "familia": [
-      "Clancy Wiggum",
-      "Sarah Wiggum"
-    ]
   },
   {
     "id": "6e5d4c3b-2a1f-9b0d-8c7e-5d4c3b2a1f0e",
