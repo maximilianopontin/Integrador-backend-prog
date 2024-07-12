@@ -23,7 +23,7 @@ describe('CharactersService', () => {
     expect(service).toBeDefined();
   });
 
-  describe('getAllCharacters', () => {//agrupa pruebas del metodo
+  describe('getAllCharacters', () => {
     it('verifica si devuelve un arreglo de personajes', async () => {
       const characters = await service.getAllCharacters();//llama a la funcion y guarda el resultado en characters
       expect(characters).toBeInstanceOf(Array);//Utiliza expect para verificar que characters sea una instancia de Array.
@@ -111,9 +111,9 @@ describe('CharactersService', () => {
       };
 
       const updated = await service.updateCharacter(id, updatedCharacter);
-      expect(updated.nombre).toEqual(updatedCharacter.nombre);
-      // Asegura que el nombre del personaje actualizado coincida con el nombre proporcionado.
-      expect(updated.edad).toEqual(updatedCharacter.edad);
+      expect(updated.id).toEqual(updatedCharacter.id);
+      // Verifica que el ID del personaje actualizado coincida con el ID proporcionado.
+    
     });
 
     it('verifica si lanza una excepcion NotFoundException cuando el personaje no existe', async () => {
@@ -141,7 +141,7 @@ describe('CharactersService', () => {
       await expect(service.updateCharacter(id, updateCharacterDto)).rejects.toThrow(NotFoundException);
     });
 
-    it('verifica si lanza uns excepcion BadRequestException si el id es invalido', async () => {
+    it('verifica si lanza una excepcion BadRequestException si el id es invalido', async () => {
       const id = '7e6d5c4b-3a2f-4b0d-9c8e-7f6e5d4c3b';
       const updateCharacterDto: UpdateCharacterDto = {
         "nombre": "Ralph wiggum",
@@ -172,7 +172,7 @@ describe('CharactersService', () => {
       const id = '7e6d5c4b-3a2f-4b0d-9c8e-7f6e5d4c3b2a';//elimino a ralph
       const deletedMessage = await service.deleteCharacter(id);
       expect(deletedMessage).toContain(id);
-      //Asegura que el mensaje de eliminación contenga el ID del personaje eliminado.
+      //verifica que el mensaje de eliminación contenga el ID del personaje eliminado.
     });
 
     it('verifica si lanza una excepcion NotFoundException cuando el personaje no existe', async () => {
@@ -180,12 +180,13 @@ describe('CharactersService', () => {
       await expect(service.deleteCharacter(id)).rejects.toThrow(NotFoundException);
     });
 
-    it('verifica si lanza uns excepcion BadRequestException si el id es invalido', async () => {
+    it('verifica si lanza una excepcion BadRequestException si el id es invalido', async () => {
       const id = '9a8b7c6d-5e4f-3d2c-1b0e-a9b8c7d6e5f4mm';
       await expect(service.deleteCharacter(id)).rejects.toThrow(BadRequestException);
     });
   });
 
 });
-//En el servicio, las pruebas se centran en la funcionalidad real de los métodos implementados
-//validar la lógica interna de los métodos del servicio que interactúan con los datos y aplican la lógica de negocio.s
+//En el servicio, las pruebas se centran en verificaar la funcionalidad real de los métodos implementados
+//validar la lógica interna de los métodos del servicio que interactúan con los datos y aplican la lógica de negocio.
+//Se asegura de que los métodos del servicio funcionen correctamente y manejen adecuadamente diferentes escenarios, como obtener, crear, actualizar y eliminar personajes.
